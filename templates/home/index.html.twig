@@ -88,4 +88,62 @@
     </div>
 </section>
 
+
+
+
+
+
+
+<!-- Featured Games Section -->
+<section class="news">
+    <div id="games" class="news-container">
+        <div class="news-header">
+            <h2>FEATURED <span class="cyan-text">GAMES</span></h2>
+            <div class="carousel-nav-buttons">
+                <button id="scrollLeft" class="carousel-btn" aria-label="Scroll Left">❮</button>
+                <button id="scrollRight" class="carousel-btn" aria-label="Scroll Right">❯</button>
+            </div>
+        </div>
+
+        <!-- Horizontal Scrolling Carousel Container -->
+        <div class="games-carousel" id="gamesCarousel">
+            <div class="game-card">
+                <img src="{{ asset('image_GamingCafe/valorant.jpg') }}" alt="Valorant">
+                <div class="game-info">
+                    <h3>Valorant</h3>
+                    <p>Tactical Shooter</p>
+                </div>
+            </div>
+            <div class="game-card">
+                <img src="{{ asset('image_GamingCafe/gta.jpg') }}" alt="GTA V">
+                <div class="game-info">
+                    <h3>GTA V</h3>
+                    <p>Open World</p>
+                </div>
+            </div>
+            <div class="game-card">
+                <img src="{{ asset('image_GamingCafe/tekken.jpg') }}" alt="Tekken 8">
+                <div class="game-info">
+                    <h3>Tekken 8</h3>
+                    <p>Fighting</p>
+                </div>
+            </div>
+            <div class="game-card">
+                <img src="{{ asset('image_GamingCafe/dota.jpg') }}" alt="Dota 2">
+                <div class="game-info">
+                    <h3>Dota 2</h3>
+                    <p>MOBA</p>
+                </div>
+            </div>
+            <div class="game-card">
+                <img src="{{ asset('image_GamingCafe/cyberpunk.jpg') }}" alt="Cyberpunk 2077">
+                <div class="game-info">
+                    <h3>Cyberpunk 2077</h3>
+                    <p>RPG Action</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
