@@ -212,3 +212,126 @@ footer {
     border-radius: 50%;
     object-fit: cover;
 }
+
+
+
+
+
+
+/* ================= WHY CHOOSE US SECTION ================= */
+
+.why-choose-us {
+    width: 100%;
+    min-height: 500px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background: #ffffff; /* Clean white background matching your old site */
+    color: #000000;
+}
+
+.why-choose-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 100px;
+    padding: 0 20px;
+}
+
+/* Left Content Column */
+.why-choose-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.why-choose-content h2 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-top: 0;
+    margin-bottom: 45px;
+    text-align: center;
+    width: 100%;
+    max-width: 360px;
+}
+
+/* Capsule Pills List */
+.feature-pills {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feature-pills li {
+    background-color: #434c6d;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-pills li:hover {
+    transform: translateX(10px) translateY(-2px);
+    background-color: #00d2ff;
+    color: #051432;
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4);
+}
+
+.feature-pills .bullet {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Right Media Column: 4-Device Composition */
+.why-choose-media {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.devices-cluster {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 460px;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+}
+
+.devices-cluster .device {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.device-1 { transform: translateY(10px); }
+.device-2 { transform: translateX(-15px); }
+.device-3 { transform: translateY(-10px); }
+.device-4 { transform: translateX(-10px); }
+
+.devices-cluster .device:hover {
+    transform: scale(1.05);
+    z-index: 5;
+}
