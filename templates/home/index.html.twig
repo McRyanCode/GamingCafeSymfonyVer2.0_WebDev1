@@ -1,11 +1,56 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Gamora's Gaming Cafe</title>
-    </head>
-    <body>
-        <h1>Symfony Project Ready!</h1>
-        <p>Gamora's Gaming Cafe migration has started successfully.</p>
-    </body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}Gamora's Gaming Cafe{% endblock %}
+
+{% block body %}
+<!-- Hero Container with Embedded Scalable Image -->
+<div class="hero-wrapper">
+    <!-- Fixed Navigation Bar -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="#home" class="brand-logo">
+                <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Gamora's Gaming Cafe">
+            </a>
+
+            <nav class="nav-links">
+                <a href="#hero">HOME</a>
+                <a href="#">PCs</a>
+                <a href="#pricing">RATES</a>
+                <a href="#events">EVENTS</a>
+                <a href="#contact">CONTACT</a>
+                <a href="#about">ABOUT US</a>
+                
+                <!-- Auth Controls Wrapper -->
+                <div class="nav-auth-container">
+                    <!-- Shown when Logged Out -->
+                    <div id="loggedOutNav" class="auth-btn-group">
+                        <button id="openSignInBtn" class="btn-nav">Sign In</button> 
+                        <button id="openSignUpBtn" class="btn-nav-primary">Sign Up</button> 
+                    </div>
+
+                    <!-- Shown when Logged In (Hidden by default for now) -->
+                    <div id="loggedInNav" class="user-profile-wrapper" style="display: none;">
+                        <button id="profileMenuBtn" class="profile-avatar-btn">
+                            <img src="{{ asset('image_GamingCafe/profile.png') }}" alt="Profile Avatar" class="user-avatar">
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Hero Body -->
+    <div id="hero" class="hero-body">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>WHERE<br><span class="cyan-text">CHAMPIONS</span> ARE BORN.</h1>
+                
+                <div class="hero-buttons">
+                    <a href="#pricing" class="custom-hero-btn custom-primary-btn">BOOK NOW</a>
+                    <a href="#pricing" class="custom-hero-btn custom-secondary-btn">VIEW RATES</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

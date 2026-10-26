@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: white;
+    background-color: #051432;
+}
+
+/* ================= CONTAINER FOR SIDE SPACING ================= */
+.navbar,
+.hero-content,
+.why-choose-us,
+.news,
+.price,
+.events,
+.contact,
+footer {
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+/* ================= HERO & NAVBAR (FLUID ZOOM) ================= */
+
+.hero-wrapper {
+    width: 100%;
+    height: clamp(500px, 70vh, 750px); 
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: linear-gradient(rgba(5, 20, 50, 0.4), rgba(5, 20, 50, 0.7)), 
+                      url('image_GamingCafe/GamerBckg.png');
+    background-repeat: no-repeat;
+    background-position: center 10%;
+    background-size: cover;
+}
+
+.site-header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 20px 0;
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.brand-logo img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #00d2ff;
+}
+
+.auth-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-nav-primary, .btn-nav {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-transform: uppercase;
+    font-family: inherit;
+}
+
+.btn-nav-primary {
+    background-color: #00d2ff;
+    color: #0b0e14;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+.btn-nav-primary:hover {
+    background-color: #33d9ff;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+    transform: translateY(-1px);
+}
+
+.btn-nav {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid #00d2ff;
+}
+
+.btn-nav:hover {
+    background: rgba(0, 210, 255, 0.15);
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.hero-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 60px 0 100px 0;
+}
+
+.hero-container {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 600px;
+    text-align: left;
+}
+
+.hero-content h1 {
+    color: #ffffff;
+    font-size: clamp(50px, 5vw, 50px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: 2px;
+    margin-bottom: 35px;
+}
+
+.cyan-text {
+    color: #00d2ff;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.custom-hero-btn {
+    display: inline-block;
+    background-color: #00d2ff;
+    color: #051432;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    padding: 14px 32px;
+    border-radius: 50px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.custom-hero-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4);
+    background-color: #ffffff;
+}
+
+.user-profile-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-avatar-btn {
+    background: transparent;
+    border: 2px solid #1e293b;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
