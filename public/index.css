@@ -452,3 +452,102 @@ footer {
     color: #00d2ff;
     font-weight: 600;
 }
+
+
+
+
+
+/* ================= PRICING REVIEW SECTION ================= */
+
+.pricing-review-section {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 70px 0;
+    color: #000000;
+}
+
+.pricing-review-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.pricing-title {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    margin-bottom: 50px;
+    color: #000000;
+}
+
+.pricing-cards-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.pricing-card {
+    background-color: #434c6d;
+    width: 280px;
+    padding: 40px 20px 35px 20px;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card-plan-title {
+    color: #00d2ff;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+}
+
+.card-duration {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.card-amount {
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+}
+
+.reserve-btn {
+    background-color: #d1d5db;
+    color: #000000;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.reserve-btn:hover {
+    background-color: #00d2ff;
+    color: #051432;
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 210, 255, 0.4);
+}
+
