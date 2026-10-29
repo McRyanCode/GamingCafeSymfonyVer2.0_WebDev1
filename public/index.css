@@ -551,3 +551,91 @@ footer {
     box-shadow: 0 6px 15px rgba(0, 210, 255, 0.4);
 }
 
+
+
+
+
+/* ================= EVENTS & TOURNAMENTS SECTION ================= */
+
+.events-section {
+    width: 100%;
+    background-color: #051432; /* Dark navy background */
+    padding: 80px 0;
+    color: #ffffff;
+}
+
+.events-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+/* Left Column Styling */
+.events-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    text-align: left;
+}
+
+.events-title {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.events-description {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+.view-events-btn {
+    display: inline-block;
+    background-color: #d1d5db; /* Light grey pill button */
+    color: #000000;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding: 14px 34px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.view-events-btn:hover {
+    background-color: #00d2ff;
+    color: #051432;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4);
+}
+
+/* Right Column Styling */
+.events-media {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.events-image {
+    width: 100%;
+    max-width: 580px;
+    height: auto;
+    border-radius: 28px; /* Smooth rounded corners matching screenshot */
+    object-fit: cover;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    display: block;
+}
