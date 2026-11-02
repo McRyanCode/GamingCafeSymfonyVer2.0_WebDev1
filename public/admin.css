@@ -283,3 +283,39 @@ body {
     background-color: #ef4444;
     color: #ffffff;
 }
+
+
+
+
+
+
+/* ================= BOOKING MANAGEMENT STYLES ================= */
+
+.badge-tier {
+    background-color: rgba(0, 210, 255, 0.1);
+    color: #00d2ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(0, 210, 255, 0.2);
+}
+
+.date-text {
+    font-size: 13px;
+    color: #00d2ff;
+    font-weight: 600;
+}
+
+.payment-status {
+    display: block;
+    font-size: 13px;
+    color: #fbbf24; /* Warning/Pending gold-orange */
+    font-weight: 700;
+}
+
+.btn-update {
+    background-color: #2563eb;
+    color: #ffffff;
+}

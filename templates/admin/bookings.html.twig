@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Booking Management{% endblock %}
+{% block page_title %}Booking Management{% endblock %}
+
+{% block body %}
+<!-- Live Reservations Card -->
+<div class="admin-card">
+    <h2 class="section-heading">Live Reservations</h2>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Device</th>
+                    <th>Tier</th>
+                    <th>Reserved At</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>#{{ booking.id }}</td>
+                    <td class="username-text">{{ booking.customer }}</td>
+                    <td>{{ booking.device }}</td>
+                    <td><span class="badge-tier">{{ booking.tier }}</span></td>
+                    <td class="date-text">{{ booking.reserved_at }}</td>
+                    <td>
+                        <span class="payment-status">{{ booking.payment }}</span>
+                    </td>
+                    <td>
+                        <select class="table-select status-select">
+                            <option value="Completed" {% if booking.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            <option value="Pending" {% if booking.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option value="Cancelled" {% if booking.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-update">Update</button>
+                        <button class="btn-action btn-delete">Remove</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
