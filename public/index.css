@@ -639,3 +639,98 @@ footer {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     display: block;
 }
+
+
+
+
+
+
+/* ================= VISIT US SECTION ================= */
+
+.visit-us-section {
+    width: 100%;
+    background-color: #ffffff; /* Clean white background */
+    padding: 80px 0;
+    color: #000000;
+}
+
+.visit-us-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+/* Left Column: Map Image */
+.visit-us-media {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visit-map-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 28px; /* Smooth rounded corners matching reference */
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+/* Right Column: Content */
+.visit-us-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 520px;
+    text-align: left;
+}
+
+.visit-title {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+    color: #000000;
+}
+
+.visit-details {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.cafe-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #000000;
+    margin: 0;
+}
+
+.cafe-address {
+    font-size: 16px;
+    font-weight: 600;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.cafe-phone {
+    font-size: 16px;
+    font-weight: 700;
+    color: #051432;
+    margin: 5px 0 0 0;
+}
+
+.cafe-hours {
+    font-size: 16px;
+    font-weight: 800;
+    color: #334155;
+    margin: 5px 0 0 0;
+}
