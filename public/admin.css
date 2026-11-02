@@ -1,0 +1,285 @@
+/* ================= ADMIN LAYOUT & SHELL ================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #030d22;
+    color: #ffffff;
+}
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.admin-sidebar {
+    width: 80px;
+    background-color: #051432;
+    border-right: 1px solid rgba(0, 210, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.sidebar-logo img {
+    width: 40px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+}
+
+.sidebar-icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    background-color: transparent;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-icon-btn:hover,
+.sidebar-icon-btn.active {
+    background-color: rgba(0, 210, 255, 0.15);
+    color: #00d2ff;
+    box-shadow: 0 0 12px rgba(0, 210, 255, 0.2);
+}
+
+/* Main Area */
+.admin-main {
+    margin-left: 80px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Header */
+.admin-header {
+    height: 80px;
+    background-color: #051432;
+    border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #7c3aed;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.profile-role {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* Content Container */
+.admin-content {
+    padding: 40px;
+}
+
+
+
+
+
+
+
+
+/* ================= CUSTOMER MANAGEMENT STYLES ================= */
+
+.admin-card {
+    background-color: #051432;
+    border: 1px solid rgba(0, 210, 255, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.section-heading {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+/* Create User Form */
+.create-user-form {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-input, .admin-select {
+    background-color: #030d22;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #ffffff;
+    font-size: 14px;
+    flex: 1;
+    min-width: 200px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.admin-input:focus, .admin-select:focus {
+    border-color: #00d2ff;
+}
+
+.btn-add-user {
+    background-color: #00d2ff;
+    color: #051432;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+    transition: all 0.2s ease;
+}
+
+.btn-add-user:hover {
+    background-color: #33d9ff;
+    transform: translateY(-2px);
+}
+
+/* Data Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th {
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-table td {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 14px;
+    color: #cbd5e1;
+    vertical-align: middle;
+}
+
+.username-text {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.table-input, .table-select {
+    background-color: #030d22;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-size: 13px;
+    width: 100%;
+    max-width: 240px;
+    outline: none;
+}
+
+.table-input:focus, .table-select:focus {
+    border-color: #00d2ff;
+}
+
+/* Action Buttons */
+.actions-cell {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.btn-action:hover {
+    opacity: 0.85;
+}
+
+.btn-save {
+    background-color: #3b82f6;
+    color: #ffffff;
+}
+
+.btn-delete {
+    background-color: #ef4444;
+    color: #ffffff;
+}

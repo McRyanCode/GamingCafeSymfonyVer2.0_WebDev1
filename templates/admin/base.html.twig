@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Admin Dashboard{% endblock %} - Gamora's Gaming Cafe</title>
+    <link rel="stylesheet" href="{{ asset('admin.css') }}?v=1">
+</head>
+<body>
+    <div class="admin-wrapper">
+        
+        <!-- Left Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-logo">
+                <a href="{{ path('app_home') }}">
+                    <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Logo">
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ path('app_home') }}" class="sidebar-icon-btn" title="Home">
+                    H
+                </a>
+                <a href="{{ path('admin_customers') }}" class="sidebar-icon-btn {% if active_page == 'customers' %}active{% endif %}" title="Customer Management">
+                    C
+                </a>
+                <a href="{{ path('admin_bookings') }}" class="sidebar-icon-btn {% if active_page == 'bookings' %}active{% endif %}" title="Booking Management">
+                    B
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="admin-main">
+            <!-- Top Header Bar -->
+            <header class="admin-header">
+                <h1 class="page-title">{% block page_title %}Dashboard{% endblock %}</h1>
+                <div class="admin-profile">
+                    <span class="profile-avatar">KE</span>
+                    <div class="profile-info">
+                        <span class="profile-name">kent</span>
+                        <span class="profile-role">Super Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Page Content -->
+            <main class="admin-content">
+                {% block body %}{% endblock %}
+            </main>
+        </div>
+
+    </div>
+</body>
+</html>

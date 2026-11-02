@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Customer Management{% endblock %}
+{% block page_title %}Customer Management{% endblock %}
+
+{% block body %}
+<!-- Create New User Card -->
+<div class="admin-card">
+    <h2 class="section-heading">Create New User</h2>
+    <form class="create-user-form" onsubmit="event.preventDefault();">
+        <input type="text" placeholder="Username" class="admin-input">
+        <input type="email" placeholder="Email" class="admin-input">
+        <input type="password" placeholder="Password (min 6 chars)" class="admin-input">
+        <select class="admin-select">
+            <option value="Customer">Customer</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <button type="submit" class="btn-add-user">+ Add User</button>
+    </form>
+</div>
+
+<!-- Registered Accounts Card -->
+<div class="admin-card">
+    <h2 class="section-heading">Registered Accounts</h2>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Bookings</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>#{{ customer.id }}</td>
+                    <td class="username-text">{{ customer.username }}</td>
+                    <td>
+                        <input type="email" value="{{ customer.email }}" class="table-input">
+                    </td>
+                    <td>
+                        <select class="table-select">
+                            <option value="Admin" {% if customer.role == 'Admin' %}selected{% endif %}>Admin</option>
+                            <option value="Customer" {% if customer.role == 'Customer' %}selected{% endif %}>Customer</option>
+                        </select>
+                    </td>
+                    <td>{{ customer.bookings }}</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-save">Save</button>
+                        <button class="btn-action btn-delete">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
