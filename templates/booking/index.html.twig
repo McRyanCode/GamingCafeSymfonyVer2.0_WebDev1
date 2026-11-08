@@ -1,0 +1,252 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Select Your Station & Time - Gamora's Gaming Cafe{% endblock %}
+
+{% block body %}
+<div class="booking-page-wrapper">
+    <div class="booking-container-main">
+
+        <header class="booking-header">
+            <a href="{{ path('app_home') }}" class="back-home-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Home
+            </a>    
+            <h1>Select Your <span class="cyan-text">Station</span></h1>    
+        </header>
+
+        <main class="booking-container">
+            
+            <!-- SELECTION VIEW -->
+            <div id="selectionStep">
+                
+                <!-- PC SECTION -->
+                <section class="device-section">
+                    <h2 class="section-title">Gaming PCs</h2>
+                    <div class="device-grid" id="pcGrid">
+                        {% for pc in pcs %}
+                        <div class="device-card" data-device-id="{{ pc.id }}" data-device-type="PC" data-device-name="{{ pc.name }}">
+                            <div class="status-pill"></div>
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/' ~ pc.img) }}" alt="{{ pc.name }}" class="device-img">
+                            </div>
+                            <h3 class="station-name">{{ pc.name }}</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">{{ pc.gpu }}</span>
+                                <span class="spec-tag">{{ pc.cpu }}</span>
+                                <span class="spec-tag">{{ pc.hz }}</span>
+                            </div>
+                            <button type="button" class="select-btn">Select {{ pc.name }}</button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <!-- CONSOLE SECTION -->
+                <section class="device-section">
+                    <h2 class="section-title">Consoles</h2>
+                    <div class="device-grid" id="consoleGrid">
+                        {% for console in consoles %}
+                        <div class="device-card" data-device-id="{{ console.id }}" data-device-type="Console" data-device-name="{{ console.name }}">
+                            <div class="status-pill"></div>
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/' ~ console.img) }}" alt="{{ console.name }}" class="device-img">
+                            </div>
+                            <h3 class="station-name">{{ console.name }}</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">{{ console.spec1 }}</span>
+                                <span class="spec-tag">{{ console.spec2 }}</span>
+                                <span class="spec-tag">{{ console.spec3 }}</span>
+                            </div>
+                            <button type="button" class="select-btn">Select {{ console.name }}</button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <!-- DATE & TIME SELECTION SECTION -->
+                <section class="datetime-section">
+                    <h2 class="section-title">Select Date & Start Time</h2>
+                    <div class="datetime-grid">
+                        <div class="input-group">
+                            <label for="bookingDate">Booking Date:</label>
+                            <input type="date" id="bookingDate" class="custom-input">
+                        </div>
+                        <div class="input-group">
+                            <label for="bookingTime">Start Time:</label>
+                            <input type="time" id="bookingTime" class="custom-input">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DURATION SELECTION SECTION -->
+                <section class="time-section">
+                    <h2 class="section-title">Select Duration</h2>
+                    
+                    <div class="time-mode-selector">
+                        <label class="mode-option">
+                            <input type="radio" name="timeMode" value="Fixed" checked>
+                            <span class="mode-card">
+                                <strong>Fixed Time</strong>
+                                <small>Specify exact hours</small>
+                            </span>
+                        </label>
+                        
+                        <label class="mode-option">
+                            <input type="radio" name="timeMode" value="Open">
+                            <span class="mode-card">
+                                <strong>Open Time</strong>
+                                <small>Pay as you play</small>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Fixed Hours Selector -->
+                    <div class="fixed-hours-wrapper" id="fixedHoursWrapper">
+                        <p class="label-text">Select Number of Hours:</p>
+                        <div class="counter-box">
+                            <button type="button" class="counter-btn" id="minusBtn" aria-label="Decrease hours">-</button>
+                            <input type="number" id="hoursInput" value="1" min="1" step="1">
+                            <button type="button" class="counter-btn" id="plusBtn" aria-label="Increase hours">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Open Time Description -->
+                    <div class="open-info-wrapper" id="openInfoWrapper" style="display: none;">
+                        <p class="open-info-text">⚡ <strong>Open Time Selected:</strong> Requires a minimum initial deposit upon session start. Billed by actual usage upon exit.</p>
+                    </div>
+                </section>
+
+                <!-- PRICING REVIEW DISPLAY CARD -->
+                <section class="price-summary-card">
+                    <h2 class="section-title">Pricing Breakdown</h2>
+                    <div class="price-details-grid">
+                        <div class="price-item">
+                            <span class="price-label">Pricing Tier:</span>
+                            <span class="price-value tier-badge" id="tierDisplay">BASIC</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">Estimated Price:</span>
+                            <span class="price-value highlight-price" id="priceDisplay">₱40</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- BOOKING SUMMARY REVIEW CARD -->
+            <div id="summaryStep" class="summary-wrapper" style="display: none;">
+                <div class="summary-card">
+                    <h2 class="summary-header">Review Your Booking</h2>
+                    <p class="summary-subtitle">Please double-check all details before confirming your reservation.</p>
+
+                    <div class="summary-details-grid">
+                        <div class="summary-row">
+                            <span class="summary-label">Selected Station:</span>
+                            <span class="summary-value" id="sumDevice">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Device Type:</span>
+                            <span class="summary-value" id="sumType">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Booking Date:</span>
+                            <span class="summary-value" id="sumDate">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Start Time:</span>
+                            <span class="summary-value" id="sumTime">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Duration / Mode:</span>
+                            <span class="summary-value" id="sumDuration">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Pricing Tier:</span>
+                            <span class="summary-value tier-badge" id="sumTier">BASIC</span>
+                        </div>
+
+                        <div class="summary-row payment-row-box">
+                            <label for="payment_method" class="summary-label">Payment Method:</label>
+                            <select name="payment_method" id="payment_method" class="form-control" required>
+                                <option value="Cash at Counter">Cash at Counter</option>
+                                <option value="GCash">GCash</option>
+                                <option value="PayMaya">PayMaya</option>
+                            </select>
+                        </div>
+
+                        <hr class="summary-divider">
+
+                        <div class="summary-row highlight-row">
+                            <span class="summary-label">Total Amount:</span>
+                            <span class="summary-value highlight-price" id="sumPrice">₱0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-actions">
+                        <button type="button" class="btn-secondary" id="backToEditBtn">← Back to Edit</button>
+                        <button type="button" class="btn-primary" id="confirmBookingBtn">Confirm Booking</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUCCESS CONFIRMATION STEP CARD -->
+            <div id="successStep" class="summary-wrapper" style="display: none;">
+                <div class="summary-card success-card">
+                    <h2 class="summary-header success-title">🎉 Booking Confirmed!</h2>
+                    <p class="summary-subtitle">Your reservation has been recorded in our system.</p>
+
+                    <div class="summary-details-grid">
+                        <div class="summary-row">
+                            <span class="summary-label">Booking Reference ID:</span>
+                            <span class="summary-value highlight-id" id="succBookingId">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Station:</span>
+                            <span class="summary-value" id="succDevice">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Date & Time:</span>
+                            <span class="summary-value" id="succDateTime">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Duration:</span>
+                            <span class="summary-value" id="succDuration">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Payment Method:</span>
+                            <span class="summary-value" id="succPaymentMethod">--</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Payment Status:</span>
+                            <span class="summary-value" id="succPaymentStatus">--</span>
+                        </div>
+                        <div class="summary-row highlight-row">
+                            <span class="summary-label">Total Amount Paid/Due:</span>
+                            <span class="summary-value highlight-price" id="succPrice">--</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-actions">
+                        <a href="{{ path('app_home') }}" class="btn-primary text-center">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Selection Status Bar -->
+            <div class="selection-bar" id="selectionBar">
+                <div class="summary-details">
+                    <span>Station: <strong id="selectedDeviceText">None</strong></span>
+                    <span class="divider">|</span>
+                    <span>Time: <strong id="selectedTimeText">1 Hour(s) (Fixed)</strong></span>
+                    <span class="divider">|</span>
+                    <span>Total: <strong id="barPriceText">₱0</strong></span>
+                </div>
+                <button type="button" class="review-btn" id="reviewBookingBtn">Review & Proceed →</button>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script src="{{ asset('booking.js') }}"></script>
+{% endblock %}
