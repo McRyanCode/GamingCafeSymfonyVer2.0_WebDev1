@@ -1,43 +1,20 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ================= HERO & NAVBAR STYLING ================= */
 
-body {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    color: white;
-    background-color: #051432;
+html, body {
+    font-family: 'Open Sans', sans-serif;
 }
-
-/* ================= CONTAINER FOR SIDE SPACING ================= */
-.navbar,
-.hero-content,
-.why-choose-us,
-.news,
-.price,
-.events,
-.contact,
-footer {
-    padding-left: 6%;
-    padding-right: 6%;
-}
-
-/* ================= HERO & NAVBAR (FLUID ZOOM) ================= */
 
 .hero-wrapper {
     width: 100%;
-    height: clamp(500px, 70vh, 750px); 
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background-image: linear-gradient(rgba(5, 20, 50, 0.4), rgba(5, 20, 50, 0.7)), 
-                      url('image_GamingCafe/GamerBckg.png');
+    background-image: linear-gradient(rgba(5, 20, 50, 0.4), rgba(5, 20, 50, 0.75)), 
+                        url('image_GamingCafe/GamerBckg.png');
     background-repeat: no-repeat;
-    background-position: center 10%;
+    background-position: center top;
     background-size: cover;
 }
 
@@ -47,13 +24,16 @@ footer {
     top: 0;
     left: 0;
     z-index: 100;
-    padding: 20px 0;
+    background: transparent !important; /* Removes the solid navy box color */
+    border-bottom: none !important;     /* Removes any border line */
+    box-shadow: none !important;        /* Removes shadows */
 }
 
 .nav-container {
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
+    height: 80px;
     padding: 0 32px;
     display: flex;
     justify-content: space-between;
@@ -88,6 +68,11 @@ footer {
     color: #00d2ff;
 }
 
+.nav-auth-container {
+    display: flex;
+    align-items: center;
+}
+
 .auth-btn-group {
     display: flex;
     align-items: center;
@@ -104,6 +89,10 @@ footer {
     transition: all 0.2s ease-in-out;
     text-transform: uppercase;
     font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-nav-primary {
@@ -135,7 +124,7 @@ footer {
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 60px 0 100px 0;
+    padding-top: 100px; /* Clears the header so content doesn't overlap */
 }
 
 .hero-container {
@@ -152,7 +141,7 @@ footer {
 
 .hero-content h1 {
     color: #ffffff;
-    font-size: clamp(50px, 5vw, 50px);
+    font-size: clamp(40px, 4.5vw, 50px);
     font-weight: 900;
     line-height: 1.15;
     letter-spacing: 2px;
@@ -189,68 +178,43 @@ footer {
     background-color: #ffffff;
 }
 
-.user-profile-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.profile-avatar-btn {
-    background: transparent;
-    border: 2px solid #1e293b;
-    border-radius: 50%;
-    padding: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.user-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-}
 
 
 
 
+    /* ================= WHY CHOOSE US SECTION ================= */
 
+    .why-choose-us {
+        width: 100%;
+        min-height: 500px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        background: #ffffff; /* Clean white background matching your old site */
+        color: #000000;
+    }
 
-/* ================= WHY CHOOSE US SECTION ================= */
+    .why-choose-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 100px;
+        padding: 0 20px;
+    }
 
-.why-choose-us {
-    width: 100%;
-    min-height: 500px;
-    padding-top: 60px;
-    padding-bottom: 60px;
-    background: #ffffff; /* Clean white background matching your old site */
-    color: #000000;
-}
+    /* Left Content Column */
+    .why-choose-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-.why-choose-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 100px;
-    padding: 0 20px;
-}
-
-/* Left Content Column */
-.why-choose-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.why-choose-content h2 {
-    font-size: 30px;
-    font-weight: 800;
+    .why-choose-content h2 {
+        font-size: 30px;
+        font-weight: 800;
     letter-spacing: 1.5px;
     margin-top: 0;
     margin-bottom: 45px;
@@ -806,21 +770,28 @@ footer {
 }
 
 .avatar-card {
-    background-color: #0b1e48;
-    border: 1px solid rgba(0, 210, 255, 0.2);
-    border-radius: 24px;
+    background-color: #172d5c; /* Muted slate-blue tone from your reference */
+    border: 1px solid rgba(0, 210, 255, 0.25);
+    border-radius: 28px;
     padding: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: visible; /* CRITICAL: Allows the character to pop out of the box */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    margin-top: 30px; /* Leaves room at the top for the head to extend upward */
 }
 
 .avatar-img {
-    width: 140px;
+    width: 170px;
     height: auto;
     object-fit: contain;
+    position: relative;
+    margin-top: -45px; /* Pulls the character up so head/hair pops out of the box */
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
 }
+
 
 /* Main Footer Layout */
 .footer-main {
@@ -929,6 +900,29 @@ footer {
     color: #051432;
 }
 
+
+.footer-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social-icons img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    transition: 0.3s ease;
+}
+
+.footer-social-icons img:hover {
+    transform: scale(1.2);
+}
 
 
 

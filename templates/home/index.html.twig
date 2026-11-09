@@ -3,56 +3,57 @@
 {% block title %}Gamora's Gaming Cafe{% endblock %}
 
 {% block body %}
-<!-- Hero Container with Embedded Scalable Image -->
-<div class="hero-wrapper">
-    <!-- Fixed Navigation Bar -->
+<section class="hero-wrapper">
+    <!-- Header & Navigation Bar -->
     <header class="site-header">
         <div class="nav-container">
-            <a href="#home" class="brand-logo">
-                <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Gamora's Gaming Cafe">
+            <!-- Brand Logo -->
+            <a href="{{ path('app_home') }}" class="brand-logo">
+                <img src="{{ asset('image_GamingCafe/logo.png') }}" alt="Gamora's Gaming Cafe Logo">
             </a>
 
+            <!-- Navigation Links (Anchors for smooth scrolling) -->
             <nav class="nav-links">
-                <a href="#hero">HOME</a>
-                <a href="#">PCs</a>
+                <a href="{{ path('app_home') }}">HOME</a>
+                <a href="#pcs">PCs</a>
                 <a href="#pricing">RATES</a>
                 <a href="#events">EVENTS</a>
                 <a href="#contact">CONTACT</a>
                 <a href="#about">ABOUT US</a>
-                
-                <!-- Auth Controls Wrapper -->
-                <div class="nav-auth-container">
-                    <!-- Shown when Logged Out -->
-                    <div id="loggedOutNav" class="auth-btn-group">
-                        <button id="openSignInBtn" class="btn-nav">Sign In</button> 
-                        <button id="openSignUpBtn" class="btn-nav-primary">Sign Up</button> 
-                    </div>
-
-                    <!-- Shown when Logged In (Hidden by default for now) -->
-                    <div id="loggedInNav" class="user-profile-wrapper" style="display: none;">
-                        <button id="profileMenuBtn" class="profile-avatar-btn">
-                            <img src="{{ asset('image_GamingCafe/profile.png') }}" alt="Profile Avatar" class="user-avatar">
-                        </button>
-                    </div>
-                </div>
             </nav>
+
+            <!-- Authentication Controls (Dynamic: Logged In vs Logged Out) -->
+            <div class="nav-auth-container">
+                {% if app.user %}
+                    <div class="auth-btn-group">
+                        <span style="color: #ffffff; font-size: 13px; font-weight: 600; margin-right: 8px;">
+                            {{ app.user.userIdentifier }}
+                        </span>
+                        <a href="{{ path('app_logout') }}" class="btn-nav">Sign Out</a>
+                    </div>
+                {% else %}
+                    <div id="loggedOutNav" class="auth-btn-group">
+                        <a href="{{ path('app_login') }}" class="btn-nav">Sign In</a> 
+                        <a href="{{ path('app_register') }}" class="btn-nav-primary">Sign Up</a> 
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </header>
 
-    <!-- Main Hero Body -->
-    <div id="hero" class="hero-body">
+    <!-- Hero Content Body -->
+    <div class="hero-body">
         <div class="hero-container">
             <div class="hero-content">
-                <h1>WHERE<br><span class="cyan-text">CHAMPIONS</span> ARE BORN.</h1>
-                
+                <h1>WHERE <span class="cyan-text">CHAMPIONS</span> ARE BORN.</h1>
                 <div class="hero-buttons">
-                    <a href="#pricing" class="custom-hero-btn custom-primary-btn">BOOK NOW</a>
-                    <a href="#pricing" class="custom-hero-btn custom-secondary-btn">VIEW RATES</a>
+                    <a href="#rates" class="custom-hero-btn">BOOK NOW</a>
+                    <a href="#rates" class="custom-hero-btn" style="background: transparent; border: 2px solid #00d2ff; color: #ffffff;">VIEW RATES</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 
 
@@ -288,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <!-- Right Column: Media -->
         <div class="events-media">
-            <img src="{{ asset('image_GamingCafe/event.png') }}" alt="Gamora Gaming Tournament Trophy Celebration" class="events-image">
+            <img src="{{ asset('image_GamingCafe/celeb1.png') }}" alt="Gamora Gaming Tournament Trophy Celebration" class="events-image">
         </div>
 
     </div>
@@ -338,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="about-media">
             <div class="avatar-card">
-                <img src="{{ asset('image_GamingCafe/avatar.png') }}" alt="Gamora Avatar" class="avatar-img">
+                <img src="{{ asset('image_GamingCafe/minechr.png') }}" alt="Gamora Avatar" class="avatar-img">
             </div>
         </div>
     </div>
@@ -388,16 +389,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <!-- Footer Bottom Bar -->
     <div class="footer-bottom">
-        <div class="footer-bottom-container">
-            <p>© 2026 Gamora's Gaming Cafe. All Rights Reserved</p>
-            <div class="footer-social-icons">
-                <a href="#" aria-label="Discord">d</a>
-                <a href="#" aria-label="Facebook">f</a>
-                <a href="#" aria-label="Twitter">X</a>
-                <a href="#" aria-label="TikTok">T</a>
-            </div>
+    <div class="footer-bottom-container">
+        <p>© 2026 Gamora's Gaming Cafe. All Rights Reserved</p>
+
+        <div class="footer-social-icons">
+            <a href="#" aria-label="Discord">
+                <img src="image_GamingCafe/discord-icon.png" alt="Discord">
+            </a>
+
+            <a href="#" aria-label="Facebook">
+                <img src="image_GamingCafe/facebook-icon.png" alt="Facebook">
+            </a>
+
+            <a href="#" aria-label="Twitter">
+                <img src="image_GamingCafe/x-icon.png" alt="Twitter">
+            </a>
+
+            <a href="#" aria-label="TikTok">
+                <img src="image_GamingCafe/tiktok-icon.png" alt="TikTok">
+            </a>
         </div>
     </div>
+</div>
 
 </footer>
 
