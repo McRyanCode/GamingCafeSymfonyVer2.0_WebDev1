@@ -340,119 +340,134 @@ footer {
 
 
 
-/* ================= FEATURED GAMES CAROUSEL SECTION ================= */
+/* ================= FEATURED GAMES CAROUSEL (ORIGINAL MATCH) ================= */
 
-.news {
-    width: 100%;
-    padding: 80px 0;
-    background-color: #051432; /* Back to dark theme */
+.featured-games {
+    background-color: #051432;
+    padding: 60px 20px;
     color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.news-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.news-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.news-header h2 {
+.featured-games h2 {
     font-size: 32px;
     font-weight: 800;
-    letter-spacing: 1.5px;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
 }
 
-.carousel-nav-buttons {
+.carousel-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
+    align-items: center;
+}
+
+.games-carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 10px 5px 20px 5px;
+}
+
+/* Hide scrollbar */
+.games-carousel::-webkit-scrollbar {
+    display: none;
+}
+.games-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.game-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
 }
 
-.carousel-btn {
-    background-color: #0b1e48;
+.game-img-wrapper {
+    width: 100%;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #091c4a;
+}
+
+.game-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-tag {
+    font-size: 11px;
+    font-weight: 700;
     color: #00d2ff;
-    border: 1.5px solid #00d2ff;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.game-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 4px 0;
+}
+
+.game-desc {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Scroll Buttons */
+.scroll-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    color: #051432;
+    border: none;
     width: 44px;
     height: 44px;
     border-radius: 50%;
     font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 10;
     transition: all 0.2s ease;
 }
 
-.carousel-btn:hover {
+.scroll-btn:hover {
     background-color: #00d2ff;
-    color: #051432;
-    box-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
-    transform: scale(1.05);
-}
-
-/* Horizontal Scroll Container */
-.games-carousel {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
-    padding: 10px 0 20px 0;
-}
-
-.games-carousel::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome/Safari */
-}
-
-/* Individual Game Cards */
-.game-card {
-    min-width: 260px;
-    height: 360px;
-    background-color: #0b1e48;
-    border-radius: 12px;
-    overflow: hidden;
-    flex-shrink: 0;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0, 210, 255, 0.15);
-}
-
-.game-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0, 210, 255, 0.25);
-    border-color: rgba(0, 210, 255, 0.5);
-}
-
-.game-card img {
-    width: 100%;
-    height: 270px;
-    object-fit: cover;
-    display: block;
-}
-
-.game-info {
-    padding: 15px 18px;
-}
-
-.game-info h3 {
-    font-size: 16px;
-    font-weight: 700;
     color: #ffffff;
-    margin-bottom: 4px;
+    transform: translateY(-50%) scale(1.05);
 }
 
-.game-info p {
-    font-size: 13px;
-    color: #00d2ff;
-    font-weight: 600;
+.left-btn {
+    left: -22px;
 }
 
+.right-btn {
+    right: -22px;
+}
 
 
 

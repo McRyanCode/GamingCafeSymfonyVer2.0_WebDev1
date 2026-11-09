@@ -94,57 +94,138 @@
 
 
 
-<!-- Featured Games Section -->
-<section class="news">
-    <div id="games" class="news-container">
-        <div class="news-header">
-            <h2>FEATURED <span class="cyan-text">GAMES</span></h2>
-            <div class="carousel-nav-buttons">
-                <button id="scrollLeft" class="carousel-btn" aria-label="Scroll Left">❮</button>
-                <button id="scrollRight" class="carousel-btn" aria-label="Scroll Right">❯</button>
+<!-- Featured Games -->
+<section class="featured-games" id="games">
+    <h2><span style="color:#00d2ff">FEATURED</span> GAMES</h2>
+    
+    <div class="carousel-wrapper">
+        <button class="scroll-btn left-btn" id="scrollLeft" aria-label="Scroll Left">❮</button>
+        
+        <div class="games-carousel" id="gamesCarousel">
+            <div class="game-card">
+                <div class="game-img-wrapper">
+                    <img src="{{ asset('image_GamingCafe/mrv.avif') }}" alt="MARVEL Tokon" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">New releases</span>
+                    <h3 class="game-title">MARVEL Tokon: Fighting Souls</h3>
+                    <p class="game-desc">Check out this month's biggest new titles, including MARVEL Tokon.</p>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-img-wrapper">
+                    <img src="{{ asset('image_GamingCafe/csgo.jpg') }}" alt="Counter-Strike 2" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Competitive FPS</span>
+                    <h3 class="game-title">Counter-Strike 2</h3>
+                    <p class="game-desc">The legendary tactical shooter experience with updated graphics and server sub-tick precision.</p>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-img-wrapper">
+                    <img src="{{ asset('image_GamingCafe/mine2.avif') }}" alt="Minecraft" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Community Favorite</span>
+                    <h3 class="game-title">Minecraft</h3>
+                    <p class="game-desc">Explore infinite world creation, survival servers, and custom multiplayer mini-games.</p>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-img-wrapper">
+                    <img src="{{ asset('image_GamingCafe/tek4.webp') }}" alt="Tekken 8" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Fighting Game</span>
+                    <h3 class="game-title">Tekken 8</h3>
+                    <p class="game-desc">Experience next-gen 3D fighting action with intense heat mechanics and fluid combat.</p>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-img-wrapper">
+                    <img src="{{ asset('image_GamingCafe/cod1.jpg') }}" alt="Call of Duty" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Latest Updates</span>
+                    <h3 class="game-title">Call of Duty: Black Ops 7</h3>
+                    <p class="game-desc">Keep up to date with the month's biggest new events and season drops.</p>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-img-wrapper">
+                    <img src="{{ asset('image_GamingCafe/val2.jpg') }}" alt="Valorant" class="game-img">
+                </div>
+                <div class="game-info">
+                    <span class="game-tag">Trending Now</span>
+                    <h3 class="game-title">Valorant</h3>
+                    <p class="game-desc">Experience fast-paced, precise tactical shooting with your team.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Horizontal Scrolling Carousel Container -->
-        <div class="games-carousel" id="gamesCarousel">
-            <div class="game-card">
-                <img src="{{ asset('image_GamingCafe/valorant.jpg') }}" alt="Valorant">
-                <div class="game-info">
-                    <h3>Valorant</h3>
-                    <p>Tactical Shooter</p>
-                </div>
-            </div>
-            <div class="game-card">
-                <img src="{{ asset('image_GamingCafe/gta.jpg') }}" alt="GTA V">
-                <div class="game-info">
-                    <h3>GTA V</h3>
-                    <p>Open World</p>
-                </div>
-            </div>
-            <div class="game-card">
-                <img src="{{ asset('image_GamingCafe/tekken.jpg') }}" alt="Tekken 8">
-                <div class="game-info">
-                    <h3>Tekken 8</h3>
-                    <p>Fighting</p>
-                </div>
-            </div>
-            <div class="game-card">
-                <img src="{{ asset('image_GamingCafe/dota.jpg') }}" alt="Dota 2">
-                <div class="game-info">
-                    <h3>Dota 2</h3>
-                    <p>MOBA</p>
-                </div>
-            </div>
-            <div class="game-card">
-                <img src="{{ asset('image_GamingCafe/cyberpunk.jpg') }}" alt="Cyberpunk 2077">
-                <div class="game-info">
-                    <h3>Cyberpunk 2077</h3>
-                    <p>RPG Action</p>
-                </div>
-            </div>
-        </div>
+        <button class="scroll-btn right-btn" id="scrollRight" aria-label="Scroll Right">❯</button>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('gamesCarousel');
+    const scrollLeftBtn = document.getElementById('scrollLeft');
+    const scrollRightBtn = document.getElementById('scrollRight');
+
+    if (carousel && scrollLeftBtn && scrollRightBtn) {
+        let isScrolling = false;
+
+        const slideNext = () => {
+            if (isScrolling) return;
+            isScrolling = true;
+
+            const card = carousel.querySelector('.game-card');
+            if (!card) return;
+
+            const cardWidth = card.offsetWidth + 20;
+            carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+
+            setTimeout(() => {
+                const firstCard = carousel.querySelector('.game-card');
+                if (firstCard) {
+                    carousel.appendChild(firstCard);
+                    carousel.scrollLeft -= cardWidth;
+                }
+                isScrolling = false;
+            }, 350);
+        };
+
+        const slidePrev = () => {
+            if (isScrolling) return;
+            isScrolling = true;
+
+            const cards = carousel.querySelectorAll('.game-card');
+            if (cards.length === 0) return;
+
+            const lastCard = cards[cards.length - 1];
+            const cardWidth = lastCard.offsetWidth + 20;
+
+            carousel.insertBefore(lastCard, carousel.firstChild);
+            carousel.scrollLeft += cardWidth;
+            carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+
+            setTimeout(() => {
+                isScrolling = false;
+            }, 350);
+        };
+
+        scrollRightBtn.addEventListener('click', slideNext);
+        scrollLeftBtn.addEventListener('click', slidePrev);
+    }
+});
+</script>
 
 
 
