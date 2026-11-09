@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create your Account - Gamora's Gaming Cafe{% endblock %}
+
+{% block body %}
+<div class="auth-page-wrapper">
+    <div class="auth-card">
+        <div class="auth-card-header">
+            <a href="{{ path('app_home') }}" class="auth-close-btn">×</a>
+            <div class="auth-logo-only">
+                <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Gamora's Gaming Cafe Logo">
+            </div>
+            <h2>Create your <span class="cyan-text">Account</span></h2>
+        </div>
+
+        <div id="alertMsg" class="alert" style="display: none;"></div>
+
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" class="form-input" required>
+            </div>
+
+            <button type="submit" class="btn-submit-auth">Create Account</button>
+        </form>
+
+        <div class="auth-divider"></div>
+
+        <p class="auth-switch-text">
+            Already have an account? <a href="{{ path('app_login') }}">Sign In</a>
+        </p>
+    </div>
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirm_password = document.getElementById('confirm_password').value;
+    const alertMsg = document.getElementById('alertMsg');
+
+    alertMsg.style.display = 'none';
+
+    try {
+        const response = await fetch('{{ path('app_register_process') }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password, confirm_password })
+        });
+
+        const data = await response.json();
+
+        alertMsg.style.display = 'block';
+        if (data.status === 'success') {
+            alertMsg.className = 'alert alert-success';
+            alertMsg.textContent = data.message;
+            setTimeout(() => {
+                window.location.href = '{{ path('app_login') }}';
+            }, 1500);
+        } else {
+            alertMsg.className = 'alert alert-error';
+            alertMsg.textContent = data.message;
+        }
+    } catch (err) {
+        alertMsg.style.display = 'block';
+        alertMsg.className = 'alert alert-error';
+        alertMsg.textContent = 'An unexpected error occurred. Please try again.';
+    }
+});
+</script>
+{% endblock %}
