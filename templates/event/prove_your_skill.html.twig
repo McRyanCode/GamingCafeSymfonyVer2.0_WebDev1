@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/prove_your_skill.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="tournament-page-container">
+    <div class="tournament-wrapper-inner">
+        <!-- BACK BUTTON -->
+        <a href="{{ path('app_home') }}" class="back-nav-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>BACK TO HOME</span>
+        </a>
+
+        <!-- MAIN HERO CONTAINER -->
+        <div class="tournament-hero-section">
+            <div class="hero-content">
+                <div class="category-tag">TOURNAMENT</div>
+                <h1 class="hero-title">Welcome to the <span>Main Stage</span></h1>
+                <p class="hero-description">
+                    Step into the arena, claim ultimate bragging rights, and turn raw skill into glory. Every showdown brings intense rivalries, elite plays, and built-in prizes for competitive champions.
+                </p>
+                <div class="badges-container">
+                    <div class="badge badge-gold">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>5,000+ Monthly Prize Pool</span>
+                    </div>
+                    <div class="badge badge-red">
+                        <i class="fa-solid fa-fire"></i>
+                        <span>Only at Gamora's Gaming Cafe</span>
+                    </div>
+                    <div class="badge badge-purple">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <span>Every Sunday @ 6:00 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image-wrapper">
+                <img src="{{ asset('image_GamingCafe/gameevent.webp') }}" alt="Gamora Tournament">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

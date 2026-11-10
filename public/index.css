@@ -51,7 +51,9 @@ html, body {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;         
+    margin-left: auto; 
+    margin-right: 25px;/* Space between the last nav link and the Sign In button */
 }
 
 .nav-links a {
@@ -654,13 +656,11 @@ html, body {
 }
 
 .visit-map-image {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 28px; /* Smooth rounded corners matching reference */
-    object-fit: cover;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    display: block;
+    flex: 1;
+    max-width: 420px;
+    height: 320px;
+    border-radius: 25px; /* Matches rounded map card from mockup */
+    overflow: hidden;
 }
 
 /* Right Column: Content */
@@ -770,26 +770,23 @@ html, body {
 }
 
 .avatar-card {
-    background-color: #172d5c; /* Muted slate-blue tone from your reference */
-    border: 1px solid rgba(0, 210, 255, 0.25);
+    position: relative;
+    background-color: #434c6d;
+    width: 240px;
+    height: 200px;
     border-radius: 28px;
-    padding: 30px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: visible; /* CRITICAL: Allows the character to pop out of the box */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    margin-top: 30px; /* Leaves room at the top for the head to extend upward */
+    align-items: flex-end;
 }
 
 .avatar-img {
-    width: 170px;
-    height: auto;
+    position: absolute;
+    bottom: 0;
+    height: 250px; /* Taller than card so head pops out top */
+    width: auto;
     object-fit: contain;
-    position: relative;
-    margin-top: -45px; /* Pulls the character up so head/hair pops out of the box */
-    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
 }
 
 
