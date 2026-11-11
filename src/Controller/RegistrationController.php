@@ -13,7 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'app_register', methods: ['GET'])]
     public function register(): Response
     {
         return $this->render('auth/register.html.twig');
@@ -24,14 +24,13 @@ class RegistrationController extends AbstractController
         Request $request, 
         EntityManagerInterface $entityManager, 
         UserPasswordHasherInterface $passwordHasher
-    ): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
+    ): JsonResponse {
+        $data = json_decode($request->getContent(), true) ?? $request->request->all();
 
-        $username = $data['username'] ?? '';
-        $email = $data['email'] ?? '';
+        $username = trim($data['username'] ?? '');
+        $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
-        $confirmPassword = $data['confirm_password'] ?? '';
+        $confirmPassword = $data['confirm_password'] ?? $data['confirm'] ?? '';
 
         if (empty($username) || empty($email) || empty($password)) {
             return new JsonResponse(['status' => 'error', 'message' => 'All fields are required.'], 400);
@@ -41,21 +40,35 @@ class RegistrationController extends AbstractController
             return new JsonResponse(['status' => 'error', 'message' => 'Passwords do not match.'], 400);
         }
 
-        // Check if user already exists
+        if (strlen($password) < 6) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Password must be at least 6 characters.'], 400);
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Please enter a valid email address.'], 400);
+        }
+
+        // Check if username already exists
         $existingUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
         if ($existingUser) {
             return new JsonResponse(['status' => 'error', 'message' => 'Username is already taken.'], 400);
         }
 
+        // Check if email already registered
+        $existingEmail = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        if ($existingEmail) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Email address is already registered.'], 400);
+        }
+
         $user = new User();
         $user->setUsername($username);
         $user->setEmail($email);
-        
-        // Hash the password securely
+        $user->setCreatedAt(new \DateTimeImmutable());
+        $user->setRoles([User::ROLE_USER]);
+
+        // Secure password hashing using Symfony's UserPasswordHasherInterface
         $hashedPassword = $passwordHasher->hashPassword($user, $password);
         $user->setPassword($hashedPassword);
-
-        $user->setRoles(['ROLE_USER']);
 
         $entityManager->persist($user);
         $entityManager->flush();

@@ -1,4 +1,159 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="user-form-card">
+    {{ form_start(form, {'attr': {'class': 'modern-form'}}) }}
+        {{ form_errors(form) }}
+
+        <div class="form-row">
+            <div class="form-field-group">
+                <label class="form-label" for="{{ form.username.vars.id }}">Username <span class="required-star">*</span></label>
+                {{ form_widget(form.username) }}
+                {{ form_errors(form.username) }}
+            </div>
+
+            <div class="form-field-group">
+                <label class="form-label" for="{{ form.email.vars.id }}">Email Address <span class="required-star">*</span></label>
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-field-group">
+                <label class="form-label" for="{{ form.roleChoice.vars.id }}">Privilege Role <span class="required-star">*</span></label>
+                {{ form_widget(form.roleChoice) }}
+                {{ form_errors(form.roleChoice) }}
+                <small class="form-help-text">Admins have full dashboard access; Staff have limited record control; Customers can book stations.</small>
+            </div>
+
+            <div class="form-field-group">
+                <label class="form-label" for="{{ form.plainPassword.vars.id }}">
+                    {{ form.plainPassword.vars.label }}
+                    {% if not form.plainPassword.vars.required %}<span class="optional-tag">(Optional)</span>{% else %}<span class="required-star">*</span>{% endif %}
+                </label>
+                {{ form_widget(form.plainPassword) }}
+                {{ form_errors(form.plainPassword) }}
+                <small class="form-help-text">Minimum 6 characters. Passwords are securely hashed with bcrypt/argon2.</small>
+            </div>
+        </div>
+
+        <div class="form-actions-bar">
+            <a href="{{ path('admin_customers') }}" class="btn-cancel">Cancel & Return</a>
+            <button type="submit" class="btn-save-record">{{ button_label|default('Save Account') }}</button>
+        </div>
+    {{ form_end(form) }}
+</div>
+
+<style>
+.user-form-card {
+    background: #111827;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-width: 800px;
+}
+
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #00ffff;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.required-star {
+    color: #ef4444;
+}
+
+.optional-tag {
+    color: #64748b;
+    font-size: 11px;
+    text-transform: none;
+}
+
+.form-help-text {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.admin-input, .admin-select {
+    background-color: #080b11 !important;
+    border: 1px solid rgba(0, 255, 255, 0.25) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-input:focus, .admin-select:focus {
+    border-color: #00ffff !important;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3) !important;
+}
+
+.form-actions-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-cancel {
+    padding: 10px 20px;
+    color: #94a3b8;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-save-record {
+    background: #00ffff;
+    color: #080b11;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.btn-save-record:hover {
+    background: #33ffff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+</style>

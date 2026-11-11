@@ -1,21 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Select Your Station & Time - Gamora's Gaming Cafe{% endblock %}
+{% block title %}Select Your Station & Time - Gaming Cafe{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('booking.css') }}">
+    <style>
+        body {
+            background-color: #0a0c14 !important;
+            color: #fff !important;
+            padding-bottom: 140px !important;
+        }
+        .custom-input {
+            background: rgba(10, 12, 20, 0.8) !important;
+            border: 1px solid rgba(0, 245, 212, 0.3) !important;
+            color: #fff !important;
+            padding: 12px 14px !important;
+            border-radius: 6px !important;
+            outline: none !important;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+        .custom-input:focus {
+            border-color: #00f5d4 !important;
+            box-shadow: 0 0 10px rgba(0, 245, 212, 0.3) !important;
+        }
+        .device-card.selected {
+            border-color: #00f5d4 !important;
+            background: rgba(0, 245, 212, 0.08) !important;
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.3) !important;
+        }
+        .device-card.selected .select-btn {
+            background: #00f5d4 !important;
+            color: #0a0c14 !important;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-<div class="booking-page-wrapper">
-    <div class="booking-container-main">
+    <header class="booking-header">
+        <a href="{{ path('app_home') }}" class="back-link" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(0, 245, 212, 0.08); border: 1px solid rgba(0, 245, 212, 0.3); color: #00f5d4; text-decoration: none; font-weight: 600; font-size: 14px; border-radius: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Home
+        </a>    
+        <h1 style="text-align: center; width: 100%;">Select Your <span style="color: #00f5d4;">Station</span></h1>    
+    </header>
 
-        <header class="booking-header">
-            <a href="{{ path('app_home') }}" class="back-home-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Back to Home
-            </a>    
-            <h1>Select Your <span class="cyan-text">Station</span></h1>    
-        </header>
+    <main class="booking-container">
+        {{ form_start(bookingForm, {'attr': {'id': 'symfonyBookingForm'}}) }}
 
-        <main class="booking-container">
-            
             <!-- SELECTION VIEW -->
             <div id="selectionStep">
                 
@@ -23,21 +56,85 @@
                 <section class="device-section">
                     <h2 class="section-title">Gaming PCs</h2>
                     <div class="device-grid" id="pcGrid">
-                        {% for pc in pcs %}
-                        <div class="device-card" data-device-id="{{ pc.id }}" data-device-type="PC" data-device-name="{{ pc.name }}">
-                            <div class="status-pill"></div>
+                        
+                        <div class="device-card" data-device-id="PC-01" data-device-type="PC" data-device-name="PC 01" onclick="selectCardData(this, 'PC 01', 'Pro Gaming Rig', 80)">
                             <div class="station-img-box">
-                                <img src="{{ asset('image_GamingCafe/' ~ pc.img) }}" alt="{{ pc.name }}" class="device-img">
+                                <img src="{{ asset('image_GamingCafe/pc.png') }}" alt="PC 01" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80'">
                             </div>
-                            <h3 class="station-name">{{ pc.name }}</h3>
+                            <h3 class="station-name">PC 01</h3>
                             <div class="spec-container">
-                                <span class="spec-tag">{{ pc.gpu }}</span>
-                                <span class="spec-tag">{{ pc.cpu }}</span>
-                                <span class="spec-tag">{{ pc.hz }}</span>
+                                <span class="spec-tag">RTX 4070</span>
+                                <span class="spec-tag">i7-13700K</span>
+                                <span class="spec-tag">240Hz</span>
                             </div>
-                            <a href="{{ path('app_book_station', {id: pc.id}) }}" class="select-btn">Select {{ pc.name }}</a>
+                            <button type="button" class="select-btn">Select PC 01</button>
                         </div>
-                        {% endfor %}
+
+                        <div class="device-card" data-device-id="PC-02" data-device-type="PC" data-device-name="PC 02" onclick="selectCardData(this, 'PC 02', 'Pro Gaming Rig', 80)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/pc2.png') }}" alt="PC 02" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">PC 02</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">RTX 4070</span>
+                                <span class="spec-tag">i7-13700K</span>
+                                <span class="spec-tag">240Hz</span>
+                            </div>
+                            <button type="button" class="select-btn">Select PC 02</button>
+                        </div>
+
+                        <div class="device-card" data-device-id="PC-03" data-device-type="PC" data-device-name="PC 03" onclick="selectCardData(this, 'PC 03', 'Standard Rig', 60)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/ps3.png') }}" alt="PC 03" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1612287233202-b51a36616763?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">PC 03</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">RTX 3060</span>
+                                <span class="spec-tag">i5-12400F</span>
+                                <span class="spec-tag">144Hz</span>
+                            </div>
+                            <button type="button" class="select-btn">Select PC 03</button>
+                        </div>
+
+                        <div class="device-card" data-device-id="PC-04" data-device-type="PC" data-device-name="PC 04" onclick="selectCardData(this, 'PC 04', 'Standard Rig', 60)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/pc4.png') }}" alt="PC 04" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">PC 04</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">RTX 3060</span>
+                                <span class="spec-tag">i5-12400F</span>
+                                <span class="spec-tag">144Hz</span>
+                            </div>
+                            <button type="button" class="select-btn">Select PC 04</button>
+                        </div>
+
+                        <div class="device-card" data-device-id="PC-05" data-device-type="PC" data-device-name="PC 05" onclick="selectCardData(this, 'PC 05', 'Standard Rig', 60)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/pc.png') }}" alt="PC 05" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">PC 05</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">RTX 3060</span>
+                                <span class="spec-tag">i5-12400F</span>
+                                <span class="spec-tag">144Hz</span>
+                            </div>
+                            <button type="button" class="select-btn">Select PC 05</button>
+                        </div>
+
+                        <div class="device-card" data-device-id="PC-06" data-device-type="PC" data-device-name="PC 06" onclick="selectCardData(this, 'PC 06', 'Standard Rig', 60)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/pc7.png') }}" alt="PC 06" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1612287233202-b51a36616763?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">PC 06</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">RTX 3060</span>
+                                <span class="spec-tag">i5-12400F</span>
+                                <span class="spec-tag">144Hz</span>
+                            </div>
+                            <button type="button" class="select-btn">Select PC 06</button>
+                        </div>
+
                     </div>
                 </section>
 
@@ -45,40 +142,65 @@
                 <section class="device-section">
                     <h2 class="section-title">Consoles</h2>
                     <div class="device-grid" id="consoleGrid">
-                        {% for console in consoles %}
-                        <div class="device-card" data-device-id="{{ console.id }}" data-device-type="Console" data-device-name="{{ console.name }}">
-                            <div class="status-pill"></div>
+                        
+                        <div class="device-card" data-device-id="Console-01" data-device-type="Console" data-device-name="Console 01" onclick="selectCardData(this, 'Console 01', 'VIP Ultra Rig', 100)">
                             <div class="station-img-box">
-                                <img src="{{ asset('image_GamingCafe/' ~ console.img) }}" alt="{{ console.name }}" class="device-img">
+                                <img src="{{ asset('image_GamingCafe/ps5.png') }}" alt="Console 01" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80'">
                             </div>
-                            <h3 class="station-name">{{ console.name }}</h3>
-                           <div class="spec-container">
-    <span class="spec-tag">{{ console.gpu }}</span>
-    <span class="spec-tag">{{ console.cpu }}</span>
-    <span class="spec-tag">{{ console.hz }}</span>
-</div>
-                            <a href="{{ path('app_book_station', {id: console.id}) }}" class="select-btn">Select {{ console.name }}</a>
+                            <h3 class="station-name">Console 01</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">PS5</span>
+                                <span class="spec-tag">4K OLED TV</span>
+                                <span class="spec-tag">2 Controllers</span>
+                            </div>
+                            <button type="button" class="select-btn">Select Console 01</button>
                         </div>
-                        {% endfor %}
+
+                        <div class="device-card" data-device-id="Console-02" data-device-type="Console" data-device-name="Console 02" onclick="selectCardData(this, 'Console 02', 'VIP Ultra Rig', 100)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/swtch.png') }}" alt="Console 02" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">Console 02</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">SWITCH 2</span>
+                                <span class="spec-tag">4K OLED TV</span>
+                                <span class="spec-tag">2 Controllers</span>
+                            </div>
+                            <button type="button" class="select-btn">Select Console 02</button>
+                        </div>
+
+                        <div class="device-card" data-device-id="Console-03" data-device-type="Console" data-device-name="Console 03" onclick="selectCardData(this, 'Console 03', 'VIP Ultra Rig', 100)">
+                            <div class="station-img-box">
+                                <img src="{{ asset('image_GamingCafe/Xbox.png') }}" alt="Console 03" class="device-img" onerror="this.src='https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80'">
+                            </div>
+                            <h3 class="station-name">Console 03</h3>
+                            <div class="spec-container">
+                                <span class="spec-tag">Xbox Series X</span>
+                                <span class="spec-tag">4K TV</span>
+                                <span class="spec-tag">2 Controllers</span>
+                            </div>
+                            <button type="button" class="select-btn">Select Console 03</button>
+                        </div>
+
                     </div>
                 </section>
 
-                <!-- DATE & TIME SELECTION SECTION -->
+                <!-- DATE & TIME SELECTION SECTION (Using Copilot's fixed bookingDate & startTime) -->
                 <section class="datetime-section">
                     <h2 class="section-title">Select Date & Start Time</h2>
                     <div class="datetime-grid">
                         <div class="input-group">
                             <label for="bookingDate">Booking Date:</label>
-                            <input type="date" id="bookingDate" class="custom-input">
+                            {{ form_widget(bookingForm.bookingDate, {'attr': {'class': 'custom-input', 'id': 'bookingDate'}}) }}
                         </div>
                         <div class="input-group">
                             <label for="bookingTime">Start Time:</label>
-                            <input type="time" id="bookingTime" class="custom-input">
+                            {{ form_widget(bookingForm.startTime, {'attr': {'class': 'custom-input', 'id': 'bookingTime'}}) }}
                         </div>
                     </div>
                 </section>
 
-                <!-- DURATION SELECTION SECTION -->
+                <!-- DURATION & TIME SELECTION SECTION -->
                 <section class="time-section">
                     <h2 class="section-title">Select Duration</h2>
                     
@@ -90,39 +212,26 @@
                                 <small>Specify exact hours</small>
                             </span>
                         </label>
-                        
-                        <label class="mode-option">
-                            <input type="radio" name="timeMode" value="Open">
-                            <span class="mode-card">
-                                <strong>Open Time</strong>
-                                <small>Pay as you play</small>
-                            </span>
-                        </label>
                     </div>
 
-                    <!-- Fixed Hours Selector -->
                     <div class="fixed-hours-wrapper" id="fixedHoursWrapper">
                         <p class="label-text">Select Number of Hours:</p>
                         <div class="counter-box">
-                            <button type="button" class="counter-btn" id="minusBtn" aria-label="Decrease hours">-</button>
-                            <input type="number" id="hoursInput" value="1" min="1" step="1">
-                            <button type="button" class="counter-btn" id="plusBtn" aria-label="Increase hours">+</button>
+                            <button type="button" class="counter-btn" onclick="adjustHours(-1)">-</button>
+                            {{ form_widget(bookingForm.hours, {'attr': {'id': 'hoursInput', 'value': '1'}}) }}
+                            <button type="button" class="counter-btn" onclick="adjustHours(1)">+</button>
                         </div>
-                    </div>
-
-                    <!-- Open Time Description -->
-                    <div class="open-info-wrapper" id="openInfoWrapper" style="display: none;">
-                        <p class="open-info-text">⚡ <strong>Open Time Selected:</strong> Requires a minimum initial deposit upon session start. Billed by actual usage upon exit.</p>
                     </div>
                 </section>
 
                 <!-- PRICING REVIEW DISPLAY CARD -->
                 <section class="price-summary-card">
                     <h2 class="section-title">Pricing Breakdown</h2>
-                    <div class="price-details-grid">
+                    <div class="price-details-grid" style="display: flex; justify-content: space-between;">
                         <div class="price-item">
                             <span class="price-label">Pricing Tier:</span>
                             <span class="price-value tier-badge" id="tierDisplay">BASIC</span>
+                            {{ form_widget(bookingForm.tier, {'attr': {'style': 'display:none;', 'id': 'hiddenTierInput'}}) }}
                         </div>
                         <div class="price-item">
                             <span class="price-label">Estimated Price:</span>
@@ -133,103 +242,9 @@
 
             </div>
 
-            <!-- BOOKING SUMMARY REVIEW CARD -->
-            <div id="summaryStep" class="summary-wrapper" style="display: none;">
-                <div class="summary-card">
-                    <h2 class="summary-header">Review Your Booking</h2>
-                    <p class="summary-subtitle">Please double-check all details before confirming your reservation.</p>
-
-                    <div class="summary-details-grid">
-                        <div class="summary-row">
-                            <span class="summary-label">Selected Station:</span>
-                            <span class="summary-value" id="sumDevice">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Device Type:</span>
-                            <span class="summary-value" id="sumType">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Booking Date:</span>
-                            <span class="summary-value" id="sumDate">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Start Time:</span>
-                            <span class="summary-value" id="sumTime">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Duration / Mode:</span>
-                            <span class="summary-value" id="sumDuration">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Pricing Tier:</span>
-                            <span class="summary-value tier-badge" id="sumTier">BASIC</span>
-                        </div>
-
-                        <div class="summary-row payment-row-box">
-                            <label for="payment_method" class="summary-label">Payment Method:</label>
-                            <select name="payment_method" id="payment_method" class="form-control" required>
-                                <option value="Cash at Counter">Cash at Counter</option>
-                                <option value="GCash">GCash</option>
-                                <option value="PayMaya">PayMaya</option>
-                            </select>
-                        </div>
-
-                        <hr class="summary-divider">
-
-                        <div class="summary-row highlight-row">
-                            <span class="summary-label">Total Amount:</span>
-                            <span class="summary-value highlight-price" id="sumPrice">₱0</span>
-                        </div>
-                    </div>
-                    
-                    <div class="summary-actions">
-                        <button type="button" class="btn-secondary" id="backToEditBtn">← Back to Edit</button>
-                        <button type="button" class="btn-primary" id="confirmBookingBtn">Confirm Booking</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SUCCESS CONFIRMATION STEP CARD -->
-            <div id="successStep" class="summary-wrapper" style="display: none;">
-                <div class="summary-card success-card">
-                    <h2 class="summary-header success-title">🎉 Booking Confirmed!</h2>
-                    <p class="summary-subtitle">Your reservation has been recorded in our system.</p>
-
-                    <div class="summary-details-grid">
-                        <div class="summary-row">
-                            <span class="summary-label">Booking Reference ID:</span>
-                            <span class="summary-value highlight-id" id="succBookingId">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Station:</span>
-                            <span class="summary-value" id="succDevice">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Date & Time:</span>
-                            <span class="summary-value" id="succDateTime">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Duration:</span>
-                            <span class="summary-value" id="succDuration">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Payment Method:</span>
-                            <span class="summary-value" id="succPaymentMethod">--</span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="summary-label">Payment Status:</span>
-                            <span class="summary-value" id="succPaymentStatus">--</span>
-                        </div>
-                        <div class="summary-row highlight-row">
-                            <span class="summary-label">Total Amount Paid/Due:</span>
-                            <span class="summary-value highlight-price" id="succPrice">--</span>
-                        </div>
-                    </div>
-
-                    <div class="summary-actions">
-                        <a href="{{ path('app_home') }}" class="btn-primary text-center">Return to Home</a>
-                    </div>
-                </div>
+            <!-- HIDDEN STATION FIELD FOR SYMFONY -->
+            <div style="display:none;">
+                {{ form_widget(bookingForm.station, {'id': 'hiddenStationInput'}) }}
             </div>
 
             <!-- Current Selection Status Bar -->
@@ -241,12 +256,42 @@
                     <span class="divider">|</span>
                     <span>Total: <strong id="barPriceText">₱0</strong></span>
                 </div>
-                <button type="button" class="review-btn" id="reviewBookingBtn">Review & Proceed →</button>
+                <button type="submit" class="review-btn" id="reviewBookingBtn">Review & Proceed →</button>
             </div>
 
-        </main>
-    </div>
-</div>
+        {{ form_end(bookingForm) }}
+    </main>
 
-<script src="{{ asset('booking.js') }}"></script>
+    <script>
+        let currentHours = 1;
+        let hourlyRate = 40;
+
+        function selectCardData(cardElement, deviceName, tierName, rate) {
+            document.querySelectorAll('.device-card').forEach(c => c.classList.remove('selected'));
+            cardElement.classList.add('selected');
+
+            hourlyRate = rate;
+            document.getElementById('selectedDeviceText').innerText = deviceName;
+            document.getElementById('hiddenStationInput').value = deviceName;
+            document.getElementById('tierDisplay').innerText = tierName;
+            document.getElementById('hiddenTierInput').value = tierName;
+            updateTotal();
+        }
+
+        function adjustHours(change) {
+            currentHours += change;
+            if (currentHours < 1) currentHours = 1;
+            if (currentHours > 12) currentHours = 12;
+
+            document.getElementById('hoursInput').value = currentHours;
+            document.getElementById('selectedTimeText').innerText = currentHours + ' Hour(s) (Fixed)';
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = currentHours * hourlyRate;
+            document.getElementById('priceDisplay').innerText = '₱' + total;
+            document.getElementById('barPriceText').innerText = '₱' + total;
+        }
+    </script>
 {% endblock %}

@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
             confirmBookingBtn.disabled = true;
             confirmBookingBtn.textContent = "Saving Booking...";
 
-            fetch("/booking/process", {
+            fetch("process_booking.php", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",

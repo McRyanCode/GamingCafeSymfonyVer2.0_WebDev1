@@ -34,7 +34,11 @@
                 <a href="{{ path('app_profile') }}" class="dropdown-item">View Profile</a>
                 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin_customers') }}" class="dropdown-item admin-link">Admin Area</a>
+                    <a href="{{ path('admin_dashboard') }}" class="dropdown-item admin-link" style="color: #00ffff; font-weight: 700;">Admin Dashboard</a>
+                    <a href="{{ path('admin_customers') }}" class="dropdown-item">Customers & Staff</a>
+                    <a href="{{ path('admin_bookings') }}" class="dropdown-item">Bookings Manager</a>
+                {% elseif is_granted('ROLE_STAFF') %}
+                    <a href="{{ path('staff_dashboard') }}" class="dropdown-item staff-link" style="color: #a78bfa; font-weight: 700;">Staff Portal</a>
                 {% endif %}
                 
                 <div class="dropdown-divider"></div>
@@ -58,7 +62,7 @@
             <div class="hero-content">
                 <h1>WHERE <span class="cyan-text">CHAMPIONS</span> ARE BORN.</h1>
                 <div class="hero-buttons">
-                    <a href="#rates" class="custom-hero-btn">BOOK NOW</a>
+                    <a href="{{ path('app_booking') }}" class="btn-book-now">BOOK NOW</a>
                     <a href="#rates" class="custom-hero-btn" style="background: transparent; border: 2px solid #00d2ff; color: #ffffff;">VIEW RATES</a>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,16 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // Redirect successfully to your home page route
+        $user = $token->getUser();
+        if ($user instanceof User) {
+            if (in_array(User::ROLE_ADMIN, $user->getRoles(), true)) {
+                return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
+            }
+            if (in_array(User::ROLE_STAFF, $user->getRoles(), true)) {
+                return new RedirectResponse($this->urlGenerator->generate('staff_dashboard'));
+            }
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 

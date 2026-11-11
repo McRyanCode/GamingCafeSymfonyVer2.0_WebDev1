@@ -1579,3 +1579,23 @@ html, body {
     background: rgba(248, 113, 113, 0.1);
     color: #ef4444;
 }
+
+
+.btn-book-now {
+    display: inline-block;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 12px 32px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.btn-book-now:hover {
+    background: #00ffff;
+    color: #080b11;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}

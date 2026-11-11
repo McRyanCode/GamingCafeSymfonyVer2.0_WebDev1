@@ -1,0 +1,560 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Staff Portal - Records Management - Gamora's Gaming Cafe{% endblock %}
+
+{% block body %}
+<div class="admin-layout">
+    <!-- Staff Sidebar Navigation -->
+    <aside class="admin-sidebar staff-sidebar-accent">
+        <div class="sidebar-brand">
+            <span style="color: #a78bfa;">GAMORA STAFF</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{{ path('app_home') }}">Home Site</a></li>
+            <li><a href="{{ path('staff_dashboard') }}" class="active">Staff Dashboard</a></li>
+            <li><a href="{{ path('staff_record_new') }}">Create Record</a></li>
+            <li><a href="{{ path('app_booking') }}">Client Booking</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('admin_dashboard') }}" style="color: #fbbf24;">Admin Panel</a></li>
+            {% endif %}
+            <li><a href="{{ path('app_logout') }}" class="logout-link">Log Out</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main-content">
+        <!-- Flash Notifications -->
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="admin-alert admin-alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <!-- Header -->
+        <div class="admin-header-flex">
+            <div>
+                <h1 class="admin-title" style="color: #a78bfa;">Staff Portal & Records</h1>
+                <p class="admin-subtitle">Limited record management: view cafe sessions and manage your assigned records.</p>
+            </div>
+            <div class="header-action-group">
+                <a href="{{ path('staff_record_new') }}" class="staff-btn-primary">+ Create New Record</a>
+                <div class="staff-stats-pill">
+                    <span>Logged in as: <strong>{{ currentUser.username }}</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Badges (Staff Highlights) -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper purple-glow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Your Created Records</span>
+                    <h2 class="stat-number" style="color: #a78bfa;">{{ myRecordsCount }}</h2>
+                    <span class="stat-hint">Editable & manageable by you</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon-wrapper cyan-glow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Shared Cafe Records</span>
+                    <h2 class="stat-number">{{ totalRecordsCount }}</h2>
+                    <span class="stat-hint">Total bookings logged in system</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon-wrapper green-glow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Total Station Rigs</span>
+                    <h2 class="stat-number" style="color: #4ade80;">{{ totalStations }}</h2>
+                    <span class="stat-hint">PC & Console Stations</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Records Table Card -->
+        <div class="admin-table-card">
+            <div class="table-responsive">
+                <table class="modern-admin-table">
+                    <thead>
+                        <tr>
+                            <th># Record ID</th>
+                            <th>Created By</th>
+                            <th>Station / Tier</th>
+                            <th>Duration</th>
+                            <th>Date / Time</th>
+                            <th>Status</th>
+                            <th class="text-right">Staff Permissions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in records %}
+                            <tr>
+                                <td class="id-col">#{{ record.id }}</td>
+                                <td class="username-col">
+                                    <div class="user-avatar-initial">{{ record.user ? record.user.userIdentifier|slice(0, 2)|upper : '??' }}</div>
+                                    <div>
+                                        <span>{{ record.user ? record.user.userIdentifier : 'N/A' }}</span>
+                                        {% if record.user and record.user.id == currentUser.id %}
+                                            <span class="badge badge-you-staff">YOUR RECORD</span>
+                                        {% elseif record.user and record.user.isAdmin() %}
+                                            <span class="badge badge-admin-tag">ADMIN RECORD</span>
+                                        {% else %}
+                                            <span class="badge badge-other-tag">SHARED</span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>{{ record.station ? record.station.name : 'Station' }}</strong>
+                                    <span class="badge badge-tier" style="margin-left: 6px;">{{ record.tier }}</span>
+                                </td>
+                                <td style="color: #a78bfa; font-weight: 700;">{{ record.hours }} hr(s)</td>
+                                <td style="color: #94a3b8;">{{ record.bookingDate ? record.bookingDate|date('Y-m-d H:i') : 'N/A' }}</td>
+                                <td>
+                                    {% if record.status == 'CONFIRMED' %}
+                                        <span class="badge badge-active">CONFIRMED</span>
+                                    {% elseif record.status == 'COMPLETED' %}
+                                        <span class="badge badge-completed">COMPLETED</span>
+                                    {% else %}
+                                        <span class="badge badge-pending">{{ record.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-right">
+                                    <div class="action-buttons-inline">
+                                        {# Rubric Requirement: Staff can ONLY edit or delete records they created #}
+                                        {% if is_granted('RECORD_EDIT', record) %}
+                                            <a href="{{ path('staff_record_edit', {'id': record.id}) }}" class="action-btn-edit">Edit</a>
+                                        {% endif %}
+
+                                        {% if is_granted('RECORD_DELETE', record) %}
+                                            <form method="post" action="{{ path('staff_record_delete', {'id': record.id}) }}" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete your record #{{ record.id }}?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete_staff_record_' ~ record.id) }}">
+                                                <button type="submit" class="action-btn-delete">Delete</button>
+                                            </form>
+                                        {% endif %}
+
+                                        {% if not is_granted('RECORD_EDIT', record) and not is_granted('RECORD_DELETE', record) %}
+                                            <span class="badge badge-locked" title="Staff members cannot modify records created by other accounts">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 3px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                                Read Only
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="empty-state">No records registered in the system.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<style>
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #080b11;
+    color: #f8fafc;
+    font-family: inherit;
+}
+
+.staff-sidebar-accent {
+    border-right-color: rgba(167, 139, 250, 0.2) !important;
+}
+
+.admin-sidebar {
+    width: 260px;
+    background: #0f172a;
+    border-right: 1px solid rgba(0, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    padding: 24px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #00ffff;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 12px 24px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu li a:hover, .sidebar-menu li a.active {
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    border-left: 3px solid #a78bfa;
+}
+
+.sidebar-menu li a.logout-link {
+    color: #f87171;
+    margin-top: 40px;
+}
+
+.sidebar-menu li a.logout-link:hover {
+    background: rgba(248, 113, 113, 0.1);
+    border-left-color: #f87171;
+}
+
+.admin-main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-x: auto;
+}
+
+.admin-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.admin-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+}
+
+.admin-subtitle {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0;
+}
+
+.header-action-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.staff-btn-primary {
+    background: #a78bfa;
+    color: #080b11;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
+}
+
+.staff-btn-primary:hover {
+    background: #c4b5fd;
+    transform: translateY(-2px);
+}
+
+.staff-stats-pill {
+    background: #111827;
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.staff-stats-pill strong {
+    color: #a78bfa;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #111827;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    border-radius: 12px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.purple-glow {
+    background: rgba(167, 139, 250, 0.1);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.cyan-glow {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.green-glow {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.stat-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: #00ffff;
+    margin: 4px 0 2px 0;
+    line-height: 1.1;
+}
+
+.stat-hint {
+    font-size: 11px;
+    color: #64748b;
+}
+
+/* Table */
+.admin-table-card {
+    background: #111827;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.modern-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.modern-admin-table th {
+    background: #0f172a;
+    color: #a78bfa;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.modern-admin-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    font-size: 14px;
+}
+
+.modern-admin-table tbody tr:hover {
+    background: rgba(167, 139, 250, 0.03);
+}
+
+.id-col {
+    color: #64748b;
+    font-family: monospace;
+}
+
+.username-col {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+}
+
+.user-avatar-initial {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(167, 139, 250, 0.15);
+    color: #a78bfa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.badge-you-staff {
+    font-size: 10px;
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    margin-left: 6px;
+}
+
+.badge-admin-tag {
+    font-size: 10px;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    margin-left: 6px;
+}
+
+.badge-other-tag {
+    font-size: 10px;
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    margin-left: 6px;
+}
+
+.badge-tier {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.badge-active {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.badge-completed {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.badge-pending {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.badge-locked {
+    background: rgba(100, 116, 139, 0.15);
+    color: #94a3b8;
+    border: 1px dashed #475569;
+    padding: 4px 10px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.action-buttons-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-btn-edit {
+    display: inline-block;
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.action-btn-edit:hover {
+    background: #a78bfa;
+    color: #080b11;
+}
+
+.action-btn-delete {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn-delete:hover {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px !important;
+    color: #64748b;
+}
+
+.admin-alert {
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.admin-alert-success {
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid #4ade80;
+    color: #4ade80;
+}
+
+.admin-alert-error {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+}
+</style>
+{% endblock %}
