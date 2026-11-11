@@ -3,15 +3,18 @@
 namespace App\Form;
 
 use App\Entity\Booking;
+use App\Entity\Station;
+use App\Repository\StationRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Constraints\Range;
 
 class BookingType extends AbstractType
 {
@@ -36,18 +39,27 @@ class BookingType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(message: 'Please specify number of hours.'),
-                    new Positive(message: 'Hours must be at least 1.'),
+                    new Range(min: 1, max: 12, notInRangeMessage: 'Choose between {{ min }} and {{ max }} hours.'),
                 ],
+                'attr' => ['min' => 1, 'max' => 12, 'step' => 1],
             ])
-            ->add('tier', TextType::class, [
+            ->add('station', EntityType::class, [
+                'class' => Station::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Choose a station',
+                'query_builder' => static fn (StationRepository $repository) => $repository
+                    ->createQueryBuilder('station')
+                    ->orderBy('station.type', 'ASC')
+                    ->addOrderBy('station.name', 'ASC'),
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(message: 'Pricing tier is required.'),
-                ],
             ])
-            ->add('station', TextType::class, [
-                'mapped' => false,
-                'required' => false,
+            ->add('paymentMethod', ChoiceType::class, [
+                'choices' => [
+                    'Cash at counter — pay in person' => 'Cash at Counter',
+                    'GCash (demo only)' => 'GCash',
+                    'Maya (demo only)' => 'Maya',
+                ],
+                'required' => true,
             ])
         ;
     }

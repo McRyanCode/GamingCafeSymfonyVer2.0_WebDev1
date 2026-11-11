@@ -25,6 +25,6 @@ class BookingSecurityTest extends WebTestCase
         $client->request('GET', '/book');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Select Your Station');
+        $this->assertSelectorTextContains('h1', 'Book your gaming station');
     }
 }

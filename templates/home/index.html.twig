@@ -63,7 +63,7 @@
                 <h1>WHERE <span class="cyan-text">CHAMPIONS</span> ARE BORN.</h1>
                 <div class="hero-buttons">
                     <a href="{{ path('app_booking') }}" class="btn-book-now">BOOK NOW</a>
-                    <a href="#rates" class="custom-hero-btn" style="background: transparent; border: 2px solid #00d2ff; color: #ffffff;">VIEW RATES</a>
+                    <a href="#pricing" class="custom-hero-btn" style="background: transparent; border: 2px solid #00d2ff; color: #ffffff;">VIEW RATES</a>
                 </div>
             </div>
         </div>
@@ -189,21 +189,27 @@
                 <h3 class="card-plan-title">BASIC</h3>
                 <p class="card-duration">1 HOUR</p>
                 <div class="card-amount">₱40</div>
-                <button class="reserve-btn">RESERVE NOW</button>
+                <a href="{{ path('app_booking') }}" style="text-decoration: none;">
+    <button type="button" class="reserve-btn">RESERVE NOW</button>
+</a>
             </div>
 
             <div class="pricing-card">
                 <h3 class="card-plan-title">STANDARD</h3>
                 <p class="card-duration">3 HOURS</p>
                 <div class="card-amount">₱100</div>
-                <button class="reserve-btn">RESERVE NOW</button>
+                <a href="{{ path('app_booking') }}" style="text-decoration: none;">
+    <button type="button" class="reserve-btn">RESERVE NOW</button>
+</a>
             </div>
 
             <div class="pricing-card">
                 <h3 class="card-plan-title">PREMIUM</h3>
                 <p class="card-duration">5 HOURS</p>
                 <div class="card-amount">₱150</div>
-                <button class="reserve-btn">RESERVE NOW</button>
+                <a href="{{ path('app_booking') }}" style="text-decoration: none;">
+    <button type="button" class="reserve-btn">RESERVE NOW</button>
+</a>
             </div>
         </div>
     </div>

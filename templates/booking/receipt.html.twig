@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Booking Receipt - Gamora's Gaming Cafe{% endblock %}
+
+{% block body %}
+    <main class="receipt-page">
+        <section class="receipt-card">
+            <p class="booking-step-label">GAMORA'S GAMING CAFE</p>
+            <h1>Booking <span class="cyan-text">receipt</span></h1>
+            <p class="receipt-reference">Reference <strong>#BOOK-{{ '%05d'|format(booking.id) }}</strong></p>
+
+            <div class="receipt-status{% if booking.paymentStatus == 'PENDING' %} is-pending{% endif %}">
+                {% if booking.paymentStatus == 'DEMO_PAID' %}
+                    Demo checkout complete — no real payment was taken.
+                {% else %}
+                    Booking confirmed — please pay at the counter.
+                {% endif %}
+            </div>
+
+            <dl class="receipt-details">
+                <div>
+                    <dt>Station</dt>
+                    <dd>
+                        {% if booking.station %}
+                            {{ booking.station.name }} ({{ booking.station.type }})
+                        {% else %}
+                            Station not assigned
+                        {% endif %}
+                    </dd>
+                </div>
+                <div><dt>Date</dt><dd>{{ booking.bookingDate|date('F j, Y') }}</dd></div>
+                <div><dt>Start time</dt><dd>{{ booking.startTime|date('g:i A') }}</dd></div>
+                <div><dt>Duration</dt><dd>{{ booking.hours }} hour{{ booking.hours == 1 ? '' : 's' }}</dd></div>
+                <div><dt>Tier</dt><dd>{{ booking.tier }}</dd></div>
+                <div><dt>Payment method</dt><dd>{{ booking.paymentMethod }}</dd></div>
+                <div class="receipt-total"><dt>Total</dt><dd>₱{{ booking.totalPrice }}</dd></div>
+            </dl>
+
+            <div class="receipt-actions">
+                <a class="review-btn" href="{{ path('app_profile') }}">View my profile</a>
+                <a class="btn-secondary" href="{{ path('app_booking') }}">Book another station</a>
+            </div>
+        </section>
+    </main>
+{% endblock %}

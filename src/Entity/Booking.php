@@ -19,7 +19,6 @@ class Booking
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[Assert\NotNull(message: 'A user must be assigned to this booking.')]
     private ?User $user = null;
 
     #[ORM\Column]
@@ -27,11 +26,9 @@ class Booking
     private ?\DateTime $startTime = null;
 
     #[ORM\Column]
-    #[Assert\NotNull(message: 'End time is required.')]
     private ?\DateTime $endTime = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'Gaming tier is required.')]
     private ?string $tier = null;
 
     #[ORM\Column]
@@ -43,8 +40,16 @@ class Booking
     private ?\DateTime $bookingDate = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\NotBlank(message: 'Status is required.')]
     private ?string $status = null;
+
+    #[ORM\Column(length: 30, options: ['default' => 'Cash at Counter'])]
+    private string $paymentMethod = 'Cash at Counter';
+
+    #[ORM\Column(length: 20, options: ['default' => 'PENDING'])]
+    private string $paymentStatus = 'PENDING';
+
+    #[ORM\Column(options: ['default' => 0])]
+    private int $totalPrice = 0;
 
     public function getId(): ?int
     {
@@ -143,6 +148,42 @@ class Booking
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(string $paymentMethod): static
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getPaymentStatus(): string
+    {
+        return $this->paymentStatus;
+    }
+
+    public function setPaymentStatus(string $paymentStatus): static
+    {
+        $this->paymentStatus = $paymentStatus;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): int
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(int $totalPrice): static
+    {
+        $this->totalPrice = $totalPrice;
 
         return $this;
     }

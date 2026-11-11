@@ -3,18 +3,69 @@
 {% block title %}My Profile - Gamora's Gaming Cafe{% endblock %}
 
 {% block body %}
-    <main>
-        <h1>My Profile</h1>
+    <main class="profile-page">
+        <section class="profile-header">
+            <p class="booking-step-label">GAMORA'S GAMING CAFE</p>
+            <h1>My <span class="cyan-text">profile</span></h1>
+            <dl class="profile-details">
+                <div><dt>Username</dt><dd>{{ user.username }}</dd></div>
+                <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+            </dl>
+        </section>
 
-        <dl>
-            <dt>Username</dt>
-            <dd>{{ user.username }}</dd>
+        <section class="profile-bookings">
+            <div class="booking-section-heading">
+                <div>
+                    <p class="booking-step-label">YOUR SESSIONS</p>
+                    <h2 class="section-title">My bookings</h2>
+                </div>
+                <a class="review-btn" href="{{ path('app_booking') }}">Book a station</a>
+            </div>
 
-            <dt>Email</dt>
-            <dd>{{ user.email }}</dd>
-        </dl>
+            {% if bookings is empty %}
+                <p class="booking-empty-state">You don't have any bookings yet.</p>
+            {% else %}
+                <div class="profile-booking-list">
+                    {% for booking in bookings %}
+                        <article class="profile-booking-card">
+                            <div class="profile-booking-heading">
+                                <div>
+                                    <h3>
+                                        {% if booking.station %}
+                                            {{ booking.station.name }} <span>({{ booking.station.type }})</span>
+                                        {% else %}
+                                            Station not assigned
+                                        {% endif %}
+                                    </h3>
+                                    <p>{{ booking.bookingDate|date('F j, Y') }} at {{ booking.startTime|date('g:i A') }}</p>
+                                </div>
+                                <span class="tier-badge">{{ booking.tier }}</span>
+                            </div>
+                            <dl class="profile-booking-details">
+                                <div><dt>Duration</dt><dd>{{ booking.hours }} hour{{ booking.hours == 1 ? '' : 's' }}</dd></div>
+                                <div><dt>Total</dt><dd>₱{{ booking.totalPrice }}</dd></div>
+                                <div><dt>Payment</dt><dd>{{ booking.paymentMethod }}</dd></div>
+                                <div>
+                                    <dt>Payment status</dt>
+                                    <dd>
+                                        {% if booking.paymentStatus == 'PENDING' %}
+                                            Pending at counter
+                                        {% else %}
+                                            Demo payment (no real charge)
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                            </dl>
+                            <a class="profile-receipt-link" href="{{ path('app_booking_receipt', {id: booking.id}) }}">View receipt →</a>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
 
-        <a href="{{ path('app_home') }}">Back to home</a>
-        <a href="{{ path('app_logout') }}">Log out</a>
+        <nav class="profile-actions">
+            <a href="{{ path('app_home') }}">Back to home</a>
+            <a href="{{ path('app_logout') }}">Log out</a>
+        </nav>
     </main>
 {% endblock %}
