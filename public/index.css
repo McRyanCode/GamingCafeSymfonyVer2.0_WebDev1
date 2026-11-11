@@ -1498,3 +1498,84 @@ html, body {
     border: 1px solid #00d2ff;
     color: #00d2ff;
 }
+
+
+.profile-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Circular Profile Button */
+.profile-circle-btn {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.4);
+    color: #00ffff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+}
+
+.profile-circle-btn:hover {
+    background: rgba(0, 255, 255, 0.25);
+    border-color: #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+/* Dropdown Menu Box */
+.profile-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    background: #121620;
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    min-width: 170px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+}
+
+.admin-link {
+    color: #fbbf24; /* Distinct gold/amber look for admin */
+}
+
+.admin-link:hover {
+    background: rgba(251, 191, 36, 0.1);
+    color: #f59e0b;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 4px 0;
+}
+
+.logout-item {
+    color: #f87171;
+}
+
+.logout-item:hover {
+    background: rgba(248, 113, 113, 0.1);
+    color: #ef4444;
+}

@@ -24,11 +24,11 @@ class AuthController extends AbstractController
         $this->connection = $connection;
     }
 
-    #[Route('/login', name: 'app_login', methods: ['GET'])]
-    public function loginPage(): Response
-    {
-        return $this->render('auth/login.html.twig');
-    }
+    // #[Route('/login', name: 'app_login', methods: ['GET'])]
+    // public function loginPage(): Response
+    // {
+    //     return $this->render('auth/login.html.twig');
+    // }
 
     #[Route('/login/process', name: 'app_login_process', methods: ['POST'])]
     public function loginProcess(Request $request): JsonResponse

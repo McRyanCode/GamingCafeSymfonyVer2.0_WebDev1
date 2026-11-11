@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Sign in to Gamora's - Gamora's Gaming Cafe{% endblock %}
@@ -5,20 +6,36 @@
 {% block body %}
 <div class="auth-page-wrapper">
     <div class="auth-card">
+
         <div class="auth-card-header">
             <a href="{{ path('app_home') }}" class="auth-close-btn">×</a>
+
             <div class="auth-logo-only">
                 <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Gamora's Gaming Cafe Logo">
             </div>
+
             <h2>Sign in to <span class="cyan-text">Gamora's</span></h2>
         </div>
 
-        <div id="alertMsg" class="alert" style="display: none;"></div>
+        {% if error %}
+            <div class="alert alert-error">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
 
-        <form id="loginForm" class="auth-form">
+        <form action="{{ path('app_login') }}" method="POST" class="auth-form">
+
             <div class="form-group">
-                <label for="login_input">Username or email address</label>
-                <input type="text" id="login_input" class="form-input" required>
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-input"
+                    value="{{ last_username }}"
+                    autocomplete="username"
+                    required
+                >
             </div>
 
             <div class="form-group">
@@ -26,54 +43,36 @@
                     <label for="password">Password</label>
                     <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
-                <input type="password" id="password" class="form-input" required>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-input"
+                    autocomplete="current-password"
+                    required
+                >
             </div>
 
-            <button type="submit" class="btn-submit-auth">Sign in</button>
+            <input
+                type="hidden"
+                name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            <button type="submit" class="btn-submit-auth">
+                Sign in
+            </button>
+
         </form>
 
         <div class="auth-divider"></div>
 
         <p class="auth-switch-text">
-            New to Gamora's? <a href="{{ path('app_register') }}">Create an account</a>
+            New to Gamora's?
+            <a href="{{ path('app_register') }}">Create an account</a>
         </p>
+
     </div>
 </div>
-
-<script>
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const loginInput = document.getElementById('login_input').value;
-    const password = document.getElementById('password').value;
-    const alertMsg = document.getElementById('alertMsg');
-
-    alertMsg.style.display = 'none';
-
-    try {
-        const response = await fetch('{{ path('app_login_process') }}', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ login_input: loginInput, password: password })
-        });
-
-        const data = await response.json();
-
-        alertMsg.style.display = 'block';
-        if (data.status === 'success') {
-            alertMsg.className = 'alert alert-success';
-            alertMsg.textContent = data.message;
-            setTimeout(() => {
-                window.location.href = '{{ path('app_home') }}';
-            }, 1000);
-        } else {
-            alertMsg.className = 'alert alert-error';
-            alertMsg.textContent = data.message;
-        }
-    } catch (err) {
-        alertMsg.style.display = 'block';
-        alertMsg.className = 'alert alert-error';
-        alertMsg.textContent = 'An unexpected error occurred. Please try again.';
-    }
-});
-</script>
 {% endblock %}

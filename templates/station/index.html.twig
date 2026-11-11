@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Station index{% endblock %}
+
+{% block body %}
+    <h1>Station index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Img</th>
+                <th>Gpu</th>
+                <th>Cpu</th>
+                <th>Hz</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>{{ station.id }}</td>
+                <td>{{ station.name }}</td>
+                <td>{{ station.type }}</td>
+                <td>{{ station.img }}</td>
+                <td>{{ station.gpu }}</td>
+                <td>{{ station.cpu }}</td>
+                <td>{{ station.hz }}</td>
+                <td>
+                    <a href="{{ path('app_station_show', {'id': station.id}) }}">show</a>
+                    <a href="{{ path('app_station_edit', {'id': station.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_station_new') }}">Create new</a>
+{% endblock %}

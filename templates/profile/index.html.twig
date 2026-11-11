@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile - Gamora's Gaming Cafe{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>My Profile</h1>
+
+        <dl>
+            <dt>Username</dt>
+            <dd>{{ user.username }}</dd>
+
+            <dt>Email</dt>
+            <dd>{{ user.email }}</dd>
+        </dl>
+
+        <a href="{{ path('app_home') }}">Back to home</a>
+        <a href="{{ path('app_logout') }}">Log out</a>
+    </main>
+{% endblock %}

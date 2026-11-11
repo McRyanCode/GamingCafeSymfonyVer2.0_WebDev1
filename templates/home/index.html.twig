@@ -12,7 +12,7 @@
                 <img src="{{ asset('image_GamingCafe/logo.png') }}" alt="Gamora's Gaming Cafe Logo">
             </a>
 
-            <!-- Navigation Links (Anchors for smooth scrolling) -->
+            <!-- Navigation Links -->
             <nav class="nav-links">
                 <a href="{{ path('app_home') }}">HOME</a>
                 <a href="#pcs">PCs</a>
@@ -22,22 +22,33 @@
                 <a href="#about">ABOUT US</a>
             </nav>
 
-            <!-- Authentication Controls (Dynamic: Logged In vs Logged Out) -->
-            <div class="nav-auth-container">
-                {% if app.user %}
-                    <div class="auth-btn-group">
-                        <span style="color: #ffffff; font-size: 13px; font-weight: 600; margin-right: 8px;">
-                            {{ app.user.userIdentifier }}
-                        </span>
-                        <a href="{{ path('app_logout') }}" class="btn-nav">Sign Out</a>
-                    </div>
-                {% else %}
-                    <div id="loggedOutNav" class="auth-btn-group">
-                        <a href="{{ path('app_login') }}" class="btn-nav">Sign In</a> 
-                        <a href="{{ path('app_register') }}" class="btn-nav-primary">Sign Up</a> 
-                    </div>
+            <!-- Authentication Controls (Circular Profile Icon & Dropdown) -->
+<div class="nav-auth-container">
+    {% if app.user %}
+        <div class="profile-dropdown-container">
+            <button id="profileDropdownBtn" class="profile-circle-btn" type="button" aria-label="User Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </button>
+            
+            <div id="profileDropdownMenu" class="profile-dropdown-menu" style="display: none;">
+                <a href="{{ path('app_profile') }}" class="dropdown-item">View Profile</a>
+                
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin_customers') }}" class="dropdown-item admin-link">Admin Area</a>
                 {% endif %}
+                
+                <div class="dropdown-divider"></div>
+                
+                <a href="{{ path('app_logout') }}" class="dropdown-item logout-item">Log Out</a>
             </div>
+        </div>
+    {% else %}
+        <div id="loggedOutNav" class="auth-btn-group">
+            <a href="{{ path('app_login') }}" class="btn-nav">Sign In</a> 
+            <a href="{{ path('app_register') }}" class="btn-nav-primary">Sign Up</a> 
+        </div>
+    {% endif %}
+</div>
         </div>
     </header>
 
@@ -55,16 +66,9 @@
     </div>
 </section>
 
-
-
-
-
-
 <!-- Why Choose Us Section -->
 <section class="why-choose-us">
     <div id="why-choose" class="why-choose-container">
-
-        <!-- Left Column: Title & Feature Capsules -->
         <div class="why-choose-content">
             <h2><span style="color:#000000">WHY</span> <span style="color:#00d2ff">CHOOSE</span> <span style="color:#000000">US ?</span></h2>
             
@@ -76,26 +80,21 @@
             </ul>
         </div>
 
-        <!-- Right Column: 4 Separate Device Images Grouped Together -->
         <div class="why-choose-media">
             <div class="devices-cluster">
                 <img src="{{ asset('image_GamingCafe/pc.png') }}" class="device device-1" alt="Gaming PC">
                 <img src="{{ asset('image_GamingCafe/Xbox.png') }}" class="device device-2" alt="Xbox Console">
                 <img src="{{ asset('image_GamingCafe/PS5.png') }}" class="device device-3" alt="PS5 Console">
                 <img src="{{ asset('image_GamingCafe/swtch.png') }}" class="device device-4" alt="Nintendo Switch">
+            
             </div>
         </div>
-
     </div>
 </section>
 
 
 
-
-
-
-
-<!-- Featured Games -->
+<!-- Featured Games Section -->
 <section class="featured-games" id="games">
     <h2><span style="color:#00d2ff">FEATURED</span> GAMES</h2>
     
@@ -174,8 +173,162 @@
     </div>
 </section>
 
+<!-- Pricing Review Section -->
+<section id="pricing" class="pricing-review-section">
+    <div class="pricing-review-container">
+        <h2 class="pricing-title">
+            <span class="cyan-text">PRICING</span> REVIEW
+        </h2>
+
+        <div class="pricing-cards-wrapper">
+            <div class="pricing-card">
+                <h3 class="card-plan-title">BASIC</h3>
+                <p class="card-duration">1 HOUR</p>
+                <div class="card-amount">₱40</div>
+                <button class="reserve-btn">RESERVE NOW</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3 class="card-plan-title">STANDARD</h3>
+                <p class="card-duration">3 HOURS</p>
+                <div class="card-amount">₱100</div>
+                <button class="reserve-btn">RESERVE NOW</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3 class="card-plan-title">PREMIUM</h3>
+                <p class="card-duration">5 HOURS</p>
+                <div class="card-amount">₱150</div>
+                <button class="reserve-btn">RESERVE NOW</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Events Section -->
+<section id="events" class="events-section">
+    <div class="events-container">
+        <div class="events-content">
+            <h2 class="events-title">
+                PROVE YOUR <span class="cyan-text">SKILLS</span>
+            </h2>
+            <p class="events-description">
+                Join exciting tournaments, community events, and friendly competitions. Compete, showcase your skills, and win amazing prizes while connecting with fellow gamers.
+            </p>
+            <a href="{{ path('app_event_prove_skill') }}" class="custom-hero-btn">VIEW EVENT</a>
+        </div>
+
+        <div class="events-media">
+            <img src="{{ asset('image_GamingCafe/celeb1.png') }}" alt="Gamora Gaming Tournament Trophy Celebration" class="events-image">
+        </div>
+    </div>
+</section>
+
+<!-- Visit Us Section -->
+<section id="contact" class="visit-us-section">
+    <div class="visit-us-container">
+        <div class="visit-us-media">
+            <img src="{{ asset('image_GamingCafe/map.png') }}" alt="Gamora's Gaming Cafe Location Map" class="visit-map-image">
+        </div>
+
+        <div class="visit-us-content">
+            <h2 class="visit-title">Visit Us</h2>
+            <div class="visit-details">
+                <h3 class="cafe-name">Gamora's Gaming Cafe</h3>
+                <p class="cafe-address">123 Gamer Street, Barangay Central,<br>Guihulngan City, Negros Oriental</p>
+                <p class="cafe-phone">(123) 456-7890</p>
+                <p class="cafe-hours">Open Daily: 10:00 AM – 12:00 AM</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Us & Footer Section -->
+<footer id="about" class="about-footer-section">
+    <div class="about-container">
+        <div class="about-content">
+            <h2 class="about-title">| ABOUT US</h2>
+            <p class="about-text">
+                <span class="cyan-text">Gamora's Gaming Cafe</span> is a modern gaming space where players can enjoy high-performance gaming, connect with friends, and become part of a welcoming gaming community. More than just a place to play, Gamora's Gaming Cafe is designed to provide a comfortable, exciting, and inclusive environment for gamers of all skill levels.
+            </p>
+        </div>
+        <div class="about-media">
+            <div class="avatar-card">
+                <img src="{{ asset('image_GamingCafe/minechr.png') }}" alt="Gamora Avatar" class="avatar-img">
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-main">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Gamora's Gaming Cafe Logo" class="footer-logo">
+            </div>
+
+            <div class="footer-col">
+                <h3>EXPLORE</h3>
+                <ul>
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#pricing">PCs</a></li>
+                    <li><a href="#pricing">RATES</a></li>
+                    <li><a href="#events">EVENTS</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                    <li><a href="#about">ABOUT US</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>LEGAL</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>FOLLOW US</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-container">
+            <p>© 2026 Gamora's Gaming Cafe. All Rights Reserved</p>
+
+            <div class="footer-social-icons">
+                <a href="#" aria-label="Discord"><img src="{{ asset('image_GamingCafe/discord-icon.png') }}" alt="Discord"></a>
+                <a href="#" aria-label="Facebook"><img src="{{ asset('image_GamingCafe/facebook-icon.png') }}" alt="Facebook"></a>
+                <a href="#" aria-label="Twitter"><img src="{{ asset('image_GamingCafe/x-icon.png') }}" alt="Twitter"></a>
+                <a href="#" aria-label="TikTok"><img src="{{ asset('image_GamingCafe/tiktok-icon.png') }}" alt="TikTok"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // Dropdown toggle logic
+    const dropdownBtn = document.getElementById('profileDropdownBtn');
+    const dropdownMenu = document.getElementById('profileDropdownMenu');
+
+    if (dropdownBtn && dropdownMenu) {
+        dropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        window.addEventListener('click', () => {
+            dropdownMenu.style.display = 'none';
+        });
+    }
+
+    // Carousel logic
     const carousel = document.getElementById('gamesCarousel');
     const scrollLeftBtn = document.getElementById('scrollLeft');
     const scrollRightBtn = document.getElementById('scrollRight');
@@ -226,192 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollLeftBtn.addEventListener('click', slidePrev);
     }
 });
+
 </script>
-
-
-
-
-
-
-
-<!-- Pricing Review Section -->
-<section id="pricing" class="pricing-review-section">
-    <div class="pricing-review-container">
-        <h2 class="pricing-title">
-            <span class="cyan-text">PRICING</span> REVIEW
-        </h2>
-
-        <div class="pricing-cards-wrapper">
-            <!-- BASIC CARD -->
-            <div class="pricing-card">
-                <h3 class="card-plan-title">BASIC</h3>
-                <p class="card-duration">1 HOUR</p>
-                <div class="card-amount">₱40</div>
-                <button class="reserve-btn">RESERVE NOW</button>
-            </div>
-
-            <!-- STANDARD CARD -->
-            <div class="pricing-card">
-                <h3 class="card-plan-title">STANDARD</h3>
-                <p class="card-duration">3 HOURS</p>
-                <div class="card-amount">₱100</div>
-                <button class="reserve-btn">RESERVE NOW</button>
-            </div>
-
-            <!-- PREMIUM CARD -->
-            <div class="pricing-card">
-                <h3 class="card-plan-title">PREMIUM</h3>
-                <p class="card-duration">5 HOURS</p>
-                <div class="card-amount">₱150</div>
-                <button class="reserve-btn">RESERVE NOW</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-<!-- Events & Tournaments Section -->
-<section id="events" class="events-section">
-    <div class="events-container">
-        
-        <!-- Left Column: Content -->
-        <div class="events-content">
-            <h2 class="events-title">
-                PROVE YOUR <span class="cyan-text">SKILLS</span>
-            </h2>
-            <p class="events-description">
-                Join exciting tournaments, community events, and friendly competitions. Compete, showcase your skills, and win amazing prizes while connecting with fellow gamers.
-            </p>
-            <a href="{{ path('app_event_prove_skill') }}" class="custom-hero-btn">VIEW EVENT</a>
-        </div>
-
-        <!-- Right Column: Media -->
-        <div class="events-media">
-            <img src="{{ asset('image_GamingCafe/celeb1.png') }}" alt="Gamora Gaming Tournament Trophy Celebration" class="events-image">
-        </div>
-
-    </div>
-</section>
-
-
-
-
-
-<!-- Visit Us Section -->
-<section id="contact" class="visit-us-section">
-    <div class="visit-us-container">
-        
-        <!-- Left Column: Map Image -->
-        <div class="visit-us-media">
-            <img src="{{ asset('image_GamingCafe/map.png') }}" alt="Gamora's Gaming Cafe Location Map" class="visit-map-image">
-        </div>
-
-        <!-- Right Column: Details -->
-        <div class="visit-us-content">
-            <h2 class="visit-title">Visit Us</h2>
-            <div class="visit-details">
-                <h3 class="cafe-name">Gamora's Gaming Cafe</h3>
-                <p class="cafe-address">123 Gamer Street, Barangay Central,<br>Guihulngan City, Negros Oriental</p>
-                <p class="cafe-phone">(123) 456-7890</p>
-                <p class="cafe-hours">Open Daily: 10:00 AM – 12:00 AM</p>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-
-
-
-
-<!-- About Us & Footer Section -->
-<footer id="about" class="about-footer-section">
-    
-    <!-- About Us Subsection -->
-    <div class="about-container">
-        <div class="about-content">
-            <h2 class="about-title">| ABOUT US</h2>
-            <p class="about-text">
-                <span class="cyan-text">Gamora's Gaming Cafe</span> is a modern gaming space where players can enjoy high-performance gaming, connect with friends, and become part of a welcoming gaming community. More than just a place to play, Gamora's Gaming Cafe is designed to provide a comfortable, exciting, and inclusive environment for gamers of all skill levels.
-            </p>
-        </div>
-        <div class="about-media">
-            <div class="avatar-card">
-                <img src="{{ asset('image_GamingCafe/minechr.png') }}" alt="Gamora Avatar" class="avatar-img">
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Footer Links Subsection -->
-    <div class="footer-main">
-        <div class="footer-container">
-            <!-- Brand Column -->
-            <div class="footer-col brand-col">
-                <img src="{{ asset('image_GamingCafe/Logo.png') }}" alt="Gamora's Gaming Cafe Logo" class="footer-logo">
-            </div>
-
-            <!-- Explore Links -->
-            <div class="footer-col">
-                <h3>EXPLORE</h3>
-                <ul>
-                    <li><a href="#home">HOME</a></li>
-                    <li><a href="#pricing">PCs</a></li>
-                    <li><a href="#pricing">RATES</a></li>
-                    <li><a href="#events">EVENTS</a></li>
-                    <li><a href="#contact">CONTACT</a></li>
-                    <li><a href="#about">ABOUT US</a></li>
-                </ul>
-            </div>
-
-            <!-- Legal Links -->
-            <div class="footer-col">
-                <h3>LEGAL</h3>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-            </div>
-
-            <!-- Follow Us Links -->
-            <div class="footer-col">
-                <h3>FOLLOW US</h3>
-                <ul>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">TikTok</a></li>
-                    <li><a href="#">Discord</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Bottom Bar -->
-    <div class="footer-bottom">
-    <div class="footer-bottom-container">
-        <p>© 2026 Gamora's Gaming Cafe. All Rights Reserved</p>
-
-        <div class="footer-social-icons">
-            <a href="#" aria-label="Discord">
-                <img src="image_GamingCafe/discord-icon.png" alt="Discord">
-            </a>
-
-            <a href="#" aria-label="Facebook">
-                <img src="image_GamingCafe/facebook-icon.png" alt="Facebook">
-            </a>
-
-            <a href="#" aria-label="Twitter">
-                <img src="image_GamingCafe/x-icon.png" alt="Twitter">
-            </a>
-
-            <a href="#" aria-label="TikTok">
-                <img src="image_GamingCafe/tiktok-icon.png" alt="TikTok">
-            </a>
-        </div>
-    </div>
-</div>
-
-</footer>
 
 {% endblock %}

@@ -35,7 +35,7 @@
                                 <span class="spec-tag">{{ pc.cpu }}</span>
                                 <span class="spec-tag">{{ pc.hz }}</span>
                             </div>
-                            <button type="button" class="select-btn">Select {{ pc.name }}</button>
+                            <a href="{{ path('app_book_station', {id: pc.id}) }}" class="select-btn">Select {{ pc.name }}</a>
                         </div>
                         {% endfor %}
                     </div>
@@ -52,12 +52,12 @@
                                 <img src="{{ asset('image_GamingCafe/' ~ console.img) }}" alt="{{ console.name }}" class="device-img">
                             </div>
                             <h3 class="station-name">{{ console.name }}</h3>
-                            <div class="spec-container">
-                                <span class="spec-tag">{{ console.spec1 }}</span>
-                                <span class="spec-tag">{{ console.spec2 }}</span>
-                                <span class="spec-tag">{{ console.spec3 }}</span>
-                            </div>
-                            <button type="button" class="select-btn">Select {{ console.name }}</button>
+                           <div class="spec-container">
+    <span class="spec-tag">{{ console.gpu }}</span>
+    <span class="spec-tag">{{ console.cpu }}</span>
+    <span class="spec-tag">{{ console.hz }}</span>
+</div>
+                            <a href="{{ path('app_book_station', {id: console.id}) }}" class="select-btn">Select {{ console.name }}</a>
                         </div>
                         {% endfor %}
                     </div>
