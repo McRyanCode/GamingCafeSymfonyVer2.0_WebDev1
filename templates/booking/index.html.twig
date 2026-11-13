@@ -10,9 +10,15 @@
     <div class="booking-page-wrapper">
         <main class="booking-container-main">
             <header class="booking-header booking-page-header">
-                <a href="{{ path('app_home') }}" class="back-home-btn">← Back to home</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin_dashboard') }}" class="back-home-btn">← Back to admin area</a>
+                {% elseif is_granted('ROLE_STAFF') %}
+                    <a href="{{ path('staff_dashboard') }}" class="back-home-btn">← Back to staff area</a>
+                {% else %}
+                    <a href="{{ path('app_home') }}" class="back-home-btn">← Back to home</a>
+                {% endif %}
                 <p class="booking-step-label">YOUR SESSION · STEP 1 OF 2</p>
-                <h1>Book your <span class="cyan-text">gaming station</span></h1>
+                <h1>Book Your <span class="cyan-text">Gaming Station</span></h1>
                 <p class="booking-intro">Pick your station, choose a start time, and select how long you want to play.</p>
             </header>
 
