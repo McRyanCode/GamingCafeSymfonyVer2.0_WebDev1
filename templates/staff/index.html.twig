@@ -64,9 +64,9 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </div>
                 <div class="stat-details">
-                    <span class="stat-label">Shared Cafe Records</span>
+                    <span class="stat-label">All Cafe Records</span>
                     <h2 class="stat-number">{{ totalRecordsCount }}</h2>
-                    <span class="stat-hint">Total bookings logged in system</span>
+                    <span class="stat-hint">Total bookings across all accounts</span>
                 </div>
             </div>
 
@@ -110,7 +110,7 @@
                                         {% elseif record.user and record.user.isAdmin() %}
                                             <span class="badge badge-admin-tag">ADMIN RECORD</span>
                                         {% else %}
-                                            <span class="badge badge-other-tag">SHARED</span>
+                                            <span class="badge badge-other-tag">OTHER USER</span>
                                         {% endif %}
                                     </div>
                                 </td>
@@ -367,6 +367,11 @@
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+}
+
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .modern-admin-table {

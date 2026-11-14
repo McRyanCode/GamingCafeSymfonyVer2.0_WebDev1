@@ -33,6 +33,20 @@ class StaffSecurityTest extends WebTestCase
         $this->assertSelectorTextContains('h1.admin-title', 'Staff Portal & Records');
     }
 
+    public function testStaffRecordsTableCanScrollHorizontally(): void
+    {
+        $client = static::createClient();
+        $userRepo = static::getContainer()->get('doctrine')->getRepository(User::class);
+        $staff = $userRepo->findOneBy(['username' => 'staff1']);
+
+        $client->loginUser($staff);
+        $client->request('GET', '/staff');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString('.table-responsive {', (string) $client->getResponse()->getContent());
+        $this->assertStringContainsString('overflow-x: auto;', (string) $client->getResponse()->getContent());
+    }
+
     public function testAdminUserCanAccessStaffPortalViaRoleHierarchy(): void
     {
         $client = static::createClient();

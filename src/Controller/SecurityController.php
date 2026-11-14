@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,18 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        $user = $this->getUser();
+        if ($user instanceof User) {
+            if ($user->isAdmin()) {
+                return $this->redirectToRoute('admin_dashboard');
+            }
+            if ($user->isStaff()) {
+                return $this->redirectToRoute('staff_dashboard');
+            }
+
+            return $this->redirectToRoute('app_home');
+        }
+
         // Get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         
