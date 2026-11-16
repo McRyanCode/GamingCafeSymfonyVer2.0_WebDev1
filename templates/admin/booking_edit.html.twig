@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Booking #{{ booking.id }} - Admin{% endblock %}
+
+{% block body %}
+<div class="admin-layout">
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand"><span>ADMIN AREA</span></div>
+        <ul class="sidebar-menu">
+            <li><a href="{{ path('app_home') }}">Home Site</a></li>
+            <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ path('admin_customers') }}">Customers & Staff</a></li>
+            <li><a href="{{ path('admin_bookings') }}" class="active">Bookings Manager</a></li>
+            <li><a href="{{ path('app_booking') }}">New Booking</a></li>
+            <li><a href="{{ path('app_logout') }}" class="logout-link">Log Out</a></li>
+        </ul>
+    </aside>
+
+    <main class="admin-main-content">
+        <div class="admin-header-flex">
+            <div>
+                <h1 class="admin-title">Edit Booking #{{ booking.id }}</h1>
+                <p class="admin-subtitle">Update customer, station, session, and payment details.</p>
+            </div>
+            <a href="{{ path('admin_bookings') }}" class="admin-btn-secondary">← Back to Bookings</a>
+        </div>
+
+        <div class="booking-edit-card">
+            {{ form_start(form, {'attr': {'class': 'booking-edit-form'}}) }}
+                {{ form_errors(form) }}
+                <div class="booking-edit-grid">
+                    {{ form_row(form.user) }}
+                    {{ form_row(form.station) }}
+                    {{ form_row(form.tier) }}
+                    {{ form_row(form.bookingDate) }}
+                    {{ form_row(form.startTime) }}
+                    {{ form_row(form.hours) }}
+                    {{ form_row(form.status) }}
+                    {{ form_row(form.paymentMethod) }}
+                    {{ form_row(form.paymentStatus) }}
+                    {{ form_row(form.totalPrice) }}
+                </div>
+                <div class="booking-edit-actions">
+                    <a href="{{ path('admin_bookings') }}" class="admin-btn-secondary">Cancel</a>
+                    <button type="submit" class="admin-btn-primary">Save Changes</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </main>
+</div>
+
+<style>
+.admin-layout { display: flex; min-height: 100vh; background: #080b11; color: #f8fafc; }
+.admin-sidebar { width: 260px; background: #0f172a; border-right: 1px solid rgba(0,255,255,.15); flex-shrink: 0; }
+.sidebar-brand { padding: 24px; color: #00ffff; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,.08); }
+.sidebar-menu { list-style: none; padding: 20px 0; margin: 0; }
+.sidebar-menu a { display: block; padding: 12px 24px; color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600; }
+.sidebar-menu a:hover, .sidebar-menu a.active { background: rgba(0,255,255,.08); color: #00ffff; border-left: 3px solid #00ffff; }
+.sidebar-menu .logout-link { color: #f87171; margin-top: 40px; }
+.admin-main-content { flex: 1; padding: 40px; overflow-x: auto; }
+.admin-header-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+.admin-title { color: #00ffff; font-size: 26px; margin: 0 0 6px; }
+.admin-subtitle { color: #94a3b8; font-size: 14px; margin: 0; }
+.booking-edit-card { max-width: 1000px; padding: 28px; background: #111827; border: 1px solid rgba(0,255,255,.15); border-radius: 12px; }
+.booking-edit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.booking-edit-grid > div { display: flex; flex-direction: column; gap: 7px; color: #cbd5e1; }
+.booking-edit-grid input, .booking-edit-grid select { width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #334155; border-radius: 6px; background: #080b11; color: #f8fafc; }
+.booking-edit-grid ul { margin: 0; padding-left: 18px; color: #f87171; }
+.booking-edit-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+.admin-btn-primary, .admin-btn-secondary { display: inline-block; padding: 10px 18px; border: 0; border-radius: 7px; font-weight: 700; text-decoration: none; cursor: pointer; }
+.admin-btn-primary { background: #00ffff; color: #080b11; }
+.admin-btn-secondary { background: #1e293b; color: #cbd5e1; }
+@media (max-width: 760px) {
+    .admin-sidebar { width: 190px; }
+    .admin-main-content { padding: 22px 16px; }
+    .booking-edit-grid { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}

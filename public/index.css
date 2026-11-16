@@ -2048,6 +2048,43 @@ html, body {
     padding: 28px;
 }
 
+.password-change-section > p:not(.booking-step-label) {
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+.password-change-form {
+    display: grid;
+    gap: 14px;
+    max-width: 540px;
+}
+
+.password-change-form > div {
+    display: grid;
+    gap: 7px;
+    color: #cbd5e1;
+}
+
+.password-change-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 8px;
+    color: #f8fafc;
+    background: #070b16;
+}
+
+.password-change-form ul {
+    margin: 0;
+    padding-left: 18px;
+    color: #f87171;
+}
+
+.password-change-form .review-btn {
+    justify-self: start;
+}
+
 .profile-booking-list {
     display: grid;
     gap: 14px;

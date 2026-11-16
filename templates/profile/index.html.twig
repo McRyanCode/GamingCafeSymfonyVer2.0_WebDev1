@@ -13,6 +13,20 @@
             </dl>
         </section>
 
+        <section class="profile-bookings password-change-section">
+            <p class="booking-step-label">ACCOUNT SECURITY</p>
+            <h2 class="section-title">Change password</h2>
+            <p>For your security, enter your current password before choosing a new one. You will need to sign in again afterward.</p>
+
+            {{ form_start(passwordForm, {'attr': {'class': 'password-change-form'}}) }}
+                {{ form_errors(passwordForm) }}
+                {{ form_row(passwordForm.currentPassword) }}
+                {{ form_row(passwordForm.newPassword.first) }}
+                {{ form_row(passwordForm.newPassword.second) }}
+                <button class="review-btn" type="submit">Change password</button>
+            {{ form_end(passwordForm) }}
+        </section>
+
         <section class="profile-bookings">
             <div class="booking-section-heading">
                 <div>

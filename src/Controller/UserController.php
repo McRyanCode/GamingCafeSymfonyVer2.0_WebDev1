@@ -105,4 +105,29 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('admin_customers');
     }
+
+    #[Route('/{id}/status', name: 'app_user_status', methods: ['POST'])]
+    public function toggleStatus(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if (!$this->isCsrfTokenValid('toggle_user_status_'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            $this->addFlash('error', 'Invalid security token for changing account status.');
+
+            return $this->redirectToRoute('admin_customers');
+        }
+
+        $currentUser = $this->getUser();
+        if ($currentUser instanceof User && $currentUser->getId() === $user->getId() && $user->isActive()) {
+            $this->addFlash('error', 'You cannot disable your own active account.');
+
+            return $this->redirectToRoute('admin_customers');
+        }
+
+        $user->setActive(!$user->isActive());
+        $entityManager->flush();
+
+        $status = $user->isActive() ? 'enabled' : 'disabled';
+        $this->addFlash('success', sprintf('Account "%s" has been %s.', $user->getUsername(), $status));
+
+        return $this->redirectToRoute('admin_customers');
+    }
 }

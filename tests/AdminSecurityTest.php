@@ -76,4 +76,22 @@ class AdminSecurityTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1.admin-title', 'User & Staff Management');
     }
+
+    public function testBookingTableScrollsAndEditLinkLooksLikeAButton(): void
+    {
+        $client = static::createClient();
+        $userRepo = static::getContainer()->get('doctrine')->getRepository(User::class);
+        $admin = $userRepo->findOneBy(['username' => 'yan']);
+
+        $client->loginUser($admin);
+        $client->request('GET', '/admin/bookings');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString('overflow-x: auto;', (string) $client->getResponse()->getContent());
+        $this->assertStringContainsString('min-width: 1200px;', (string) $client->getResponse()->getContent());
+        $this->assertStringContainsString('.modern-admin-table th.text-right', (string) $client->getResponse()->getContent());
+        $this->assertStringContainsString('text-align: center;', (string) $client->getResponse()->getContent());
+        $this->assertSelectorExists('a.action-btn-edit');
+        $this->assertStringContainsString('background: rgba(0, 255, 255, 0.1);', (string) $client->getResponse()->getContent());
+    }
 }

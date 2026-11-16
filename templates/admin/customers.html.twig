@@ -54,6 +54,7 @@
                             <th>Email Address</th>
                             <th>Privilege Role</th>
                             <th>Date Created</th>
+                            <th>Account Status</th>
                             <th class="text-right">Actions</th>
                         </tr>
                     </thead>
@@ -87,10 +88,22 @@
                                 <td style="color: #94a3b8; font-size: 13px;">
                                     {{ user.createdAt ? user.createdAt|date('Y-m-d H:i') : 'Earlier' }}
                                 </td>
+                                <td>
+                                    <span class="badge {{ user.isActive ? 'badge-account-active' : 'badge-account-disabled' }}">
+                                        {{ user.isActive ? 'ACTIVE' : 'DISABLED' }}
+                                    </span>
+                                </td>
                                 <td class="text-right">
                                     <div class="action-buttons-inline">
                                         <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="action-btn-edit">Edit</a>
-                                        
+
+                                        {% if not app.user or app.user.id != user.id %}
+                                            <form method="post" action="{{ path('app_user_status', {'id': user.id}) }}" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to {{ user.isActive ? 'disable' : 'enable' }} account \'{{ user.username }}\'?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('toggle_user_status_' ~ user.id) }}">
+                                                <button type="submit" class="action-btn-status">{{ user.isActive ? 'Disable' : 'Enable' }}</button>
+                                            </form>
+                                        {% endif %}
+
                                         {% if not app.user or app.user.id != user.id %}
                                             <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to permanently delete account \'{{ user.username }}\'? This cannot be undone.');">
                                                 <input type="hidden" name="_token" value="{{ csrf_token('delete_user_' ~ user.id) }}">
@@ -104,7 +117,7 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="6" class="empty-state">No user accounts found in the database.</td>
+                                <td colspan="7" class="empty-state">No user accounts found in the database.</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -335,6 +348,18 @@
     border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
+.badge-account-active {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.badge-account-disabled {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
 .badge-you {
     font-size: 10px;
     background: rgba(74, 222, 128, 0.2);
@@ -372,6 +397,17 @@
     background: #00ffff;
     color: #080b11;
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.action-btn-status {
+    background: rgba(251, 191, 36, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .action-btn-delete {

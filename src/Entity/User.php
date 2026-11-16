@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'users')]
 #[UniqueEntity(fields: ['username'], message: 'This username is already taken.')]
 #[UniqueEntity(fields: ['email'], message: 'This email is already registered.')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, EquatableInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_STAFF = 'ROLE_STAFF';
@@ -44,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(options: ['default' => true])]
+    private bool $isActive = true;
 
     /**
      * @var Collection<int, Booking>
@@ -139,9 +143,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
     public function isAdmin(): bool
     {
         return in_array(self::ROLE_ADMIN, $this->getRoles(), true);
+    }
+
+    public function isEqualTo(UserInterface $user): bool
+    {
+        return $user instanceof self
+            && $this->getId() === $user->getId()
+            && $this->getUserIdentifier() === $user->getUserIdentifier()
+            && $this->getEmail() === $user->getEmail()
+            && $this->getPassword() === $user->getPassword()
+            && $this->getRoles() === $user->getRoles()
+            && $this->isActive === $user->isActive();
     }
 
     public function isStaff(): bool

@@ -98,6 +98,8 @@
                                         </form>
 
                                         <!-- Delete Booking Form -->
+                                        <a href="{{ path('admin_booking_edit', {'id': booking.id}) }}" class="action-btn-edit">Edit</a>
+
                                         <form method="post" action="{{ path('admin_booking_delete', {'id': booking.id}) }}" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete booking #{{ booking.id }}?');">
                                             <input type="hidden" name="_token" value="{{ csrf_token('delete_booking_' ~ booking.id) }}">
                                             <button type="submit" class="action-btn-delete">Delete</button>
@@ -248,8 +250,15 @@
     overflow: hidden;
 }
 
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .modern-admin-table {
     width: 100%;
+    min-width: 1200px;
     border-collapse: collapse;
     text-align: left;
     white-space: nowrap;
@@ -344,10 +353,44 @@
     text-align: right;
 }
 
+.modern-admin-table th.text-right,
+.modern-admin-table td.text-right {
+    text-align: center;
+}
+
 .action-buttons-inline {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+}
+
+.modern-admin-table td.text-right .action-buttons-inline {
+    justify-content: center;
+}
+
+.action-btn-edit {
+    display: inline-flex;
+    min-height: 30px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 6px;
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.action-btn-edit:hover,
+.action-btn-edit:focus-visible {
+    background: #00ffff;
+    color: #080b11;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    outline: none;
 }
 
 .action-btn-status {

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Form\AdminBookingType;
 use App\Repository\UserRepository;
 use App\Repository\BookingRepository;
 use App\Repository\StationRepository;
@@ -49,6 +50,46 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/bookings.html.twig', [
             'bookings' => $bookingRepository->findBy([], ['id' => 'DESC']),
+        ]);
+    }
+
+    #[Route('/bookings/{id}/edit', name: 'admin_booking_edit', methods: ['GET', 'POST'])]
+    public function editBooking(
+        Request $request,
+        Booking $booking,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $form = $this->createForm(AdminBookingType::class, $booking);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookingDate = $booking->getBookingDate();
+            $selectedStartTime = $booking->getStartTime();
+            $hours = $booking->getHours();
+
+            if ($bookingDate === null || $selectedStartTime === null || $hours === null) {
+                throw new \LogicException('A valid booking edit form must contain a date, start time, and duration.');
+            }
+
+            $startTime = clone $bookingDate;
+            $startTime->setTime(
+                (int) $selectedStartTime->format('H'),
+                (int) $selectedStartTime->format('i'),
+                (int) $selectedStartTime->format('s')
+            );
+            $booking->setStartTime($startTime);
+            $booking->setEndTime((clone $startTime)->modify(sprintf('+%d hours', $hours)));
+
+            $entityManager->flush();
+
+            $this->addFlash('success', sprintf('Booking #%d updated successfully.', $booking->getId()));
+
+            return $this->redirectToRoute('admin_bookings');
+        }
+
+        return $this->render('admin/booking_edit.html.twig', [
+            'booking' => $booking,
+            'form' => $form->createView(),
         ]);
     }
 
