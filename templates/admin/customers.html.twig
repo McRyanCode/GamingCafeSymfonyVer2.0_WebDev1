@@ -45,8 +45,9 @@
 
         <!-- Main Data Table Card -->
         <div class="admin-table-card">
-            <div class="table-responsive">
-                <table class="modern-admin-table">
+            <p class="customers-table-scroll-hint">Swipe or scroll horizontally to view all columns.</p>
+            <div class="table-responsive customers-table-scroll">
+                <table class="modern-admin-table admin-customers-table">
                     <thead>
                         <tr>
                             <th># ID</th>
@@ -258,12 +259,55 @@
     overflow: hidden;
 }
 
+.customers-table-scroll-hint {
+    margin: 0;
+    padding: 12px 16px 0;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.customers-table-scroll {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
 .modern-admin-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
     white-space: nowrap;
 }
+
+.admin-customers-table {
+    table-layout: fixed;
+    white-space: normal;
+}
+
+@media (min-width: 768px) {
+    .admin-customers-table {
+        min-width: 1080px;
+    }
+}
+
+.admin-customers-table th,
+.admin-customers-table td {
+    padding: 11px 8px;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
+}
+
+.admin-customers-table th:nth-child(1) { width: 6%; }
+.admin-customers-table th:nth-child(2) { width: 16%; }
+.admin-customers-table th:nth-child(3) { width: 18%; }
+.admin-customers-table th:nth-child(4) { width: 11%; }
+.admin-customers-table th:nth-child(5) { width: 14%; }
+.admin-customers-table th:nth-child(6) { width: 14%; }
+.admin-customers-table th:nth-child(7) { width: 21%; }
 
 .modern-admin-table th {
     background: #0f172a;
@@ -301,6 +345,11 @@
 .user-name-title {
     font-weight: 700;
     color: #ffffff;
+    overflow-wrap: anywhere;
+}
+
+.username-col > div {
+    min-width: 0;
 }
 
 .user-avatar-initial {
@@ -319,6 +368,7 @@
 
 .role-badges {
     display: flex;
+    flex-wrap: wrap;
     gap: 6px;
 }
 
@@ -375,9 +425,21 @@
 }
 
 .action-buttons-inline {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.admin-customers-table .action-btn-edit,
+.admin-customers-table .action-btn-status,
+.admin-customers-table .action-btn-delete,
+.admin-customers-table .action-locked-btn {
+    padding-right: 8px;
+    padding-left: 8px;
+    font-size: 11px;
+    white-space: nowrap;
 }
 
 .action-btn-edit {
@@ -460,6 +522,28 @@
     background: rgba(239, 68, 68, 0.15);
     border: 1px solid #ef4444;
     color: #ef4444;
+}
+
+body .admin-customers-table th,
+body .admin-customers-table td {
+    padding: 10px 8px;
+}
+
+body .admin-customers-table th:nth-child(6),
+body .admin-customers-table td:nth-child(6) {
+    white-space: nowrap;
+}
+
+body .admin-customers-table th:nth-child(6) {
+    padding-right: 4px;
+    padding-left: 4px;
+    font-size: 10px;
+    letter-spacing: 0.2px;
+}
+
+body .admin-customers-table th.text-right {
+    text-align: center;
+    white-space: nowrap;
 }
 </style>
 {% endblock %}

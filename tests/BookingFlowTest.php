@@ -32,6 +32,7 @@ class BookingFlowTest extends WebTestCase
         self::assertSelectorExists('#bookingTime[type="time"]');
         self::assertSelectorExists('#hoursInput[type="number"]');
         self::assertSelectorExists('#stationInput');
+        self::assertStringNotContainsString('demo', strtolower($crawler->filter('#reviewStep')->text()));
 
         $bookingDate = new \DateTime(sprintf('2099-12-%02d', random_int(1, 28)));
         $bookingId = null;
@@ -60,12 +61,14 @@ class BookingFlowTest extends WebTestCase
             self::assertSelectorTextContains('.receipt-details', 'STANDARD');
             self::assertSelectorTextContains('.receipt-details', 'GCash');
             self::assertSelectorTextContains('.receipt-details', '₱100');
-            self::assertSelectorTextContains('.receipt-status', 'no real payment was taken');
+            self::assertSelectorTextContains('.receipt-status', 'Payment confirmed');
+            self::assertStringNotContainsString('demo', strtolower($client->getCrawler()->filter('.receipt-card')->text()));
 
             $client->request('GET', '/profile');
             self::assertResponseIsSuccessful();
             self::assertSelectorTextContains('.profile-booking-list', $station->getName());
             self::assertSelectorTextContains('.profile-booking-list', 'STANDARD');
+            self::assertSelectorTextContains('.profile-booking-list', 'Paid');
             self::assertSelectorExists(sprintf('a[href="/bookings/%d/receipt"]', $bookingId));
         } finally {
             if ($bookingId !== null) {

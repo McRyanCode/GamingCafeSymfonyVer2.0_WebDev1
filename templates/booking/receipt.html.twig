@@ -11,7 +11,7 @@
 
             <div class="receipt-status{% if booking.paymentStatus == 'PENDING' %} is-pending{% endif %}">
                 {% if booking.paymentStatus == 'DEMO_PAID' %}
-                    Demo checkout complete — no real payment was taken.
+                    Payment confirmed — your booking is complete.
                 {% else %}
                     Booking confirmed — please pay at the counter.
                 {% endif %}

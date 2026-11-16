@@ -56,8 +56,8 @@ class BookingType extends AbstractType
             ->add('paymentMethod', ChoiceType::class, [
                 'choices' => [
                     'Cash at counter — pay in person' => 'Cash at Counter',
-                    'GCash (demo only)' => 'GCash',
-                    'Maya (demo only)' => 'Maya',
+                    'GCash' => 'GCash',
+                    'Maya' => 'Maya',
                 ],
                 'required' => true,
             ])

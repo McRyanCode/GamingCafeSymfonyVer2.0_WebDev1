@@ -25,7 +25,7 @@ class StaffController extends AbstractController
         /** @var \App\Entity\User $currentUser */
         $currentUser = $this->getUser();
 
-        $allRecords = $bookingRepository->findBy([], ['id' => 'DESC']);
+        $allRecords = $bookingRepository->findAllWithUserAndStation();
         $myRecordsCount = $bookingRepository->countByUser($currentUser);
         $totalRecordsCount = $bookingRepository->countTotalBookings();
         $totalStations = $stationRepository->countTotalStations();

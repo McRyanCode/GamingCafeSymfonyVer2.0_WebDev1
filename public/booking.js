@@ -169,8 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
             paymentNote.textContent = "Your station will be reserved. Pay the cafe staff when you arrive.";
             confirmButton.textContent = "Confirm booking — pay at counter";
         } else {
-            paymentNote.textContent = "Demo checkout only: no money will be charged. Your receipt will clearly say this is a demo payment.";
-            confirmButton.textContent = "Complete demo payment";
+            paymentNote.textContent = `Confirm your booking using ${paymentMethod.value}.`;
+            confirmButton.textContent = `Pay with ${paymentMethod.value}`;
         }
     }
 

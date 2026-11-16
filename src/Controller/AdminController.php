@@ -49,7 +49,7 @@ class AdminController extends AbstractController
     public function bookings(BookingRepository $bookingRepository): Response
     {
         return $this->render('admin/bookings.html.twig', [
-            'bookings' => $bookingRepository->findBy([], ['id' => 'DESC']),
+            'bookings' => $bookingRepository->findAllWithUserAndStation(),
         ]);
     }
 

@@ -71,4 +71,19 @@ class BookingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @return Booking[]
+     */
+    public function findAllWithUserAndStation(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->leftJoin('b.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('b.station', 's')
+            ->addSelect('s')
+            ->orderBy('b.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
